@@ -2,7 +2,16 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        tomato: "#FF4B3A"
+      },
+    },
+    container: {
+      padding: {
+        lg: "10rem",
+      },
+    },
   },
   plugins: [],
 };
