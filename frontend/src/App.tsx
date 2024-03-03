@@ -9,6 +9,9 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Layout><HomePage /></Layout>} />
+
+        
+        <Route path='/kravins' element={<Layout><p>Kravins Page</p></Layout>} />
       </Routes>
     </>
   )
