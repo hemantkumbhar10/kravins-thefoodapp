@@ -32,7 +32,7 @@ const Header = () => {
             </Link>
           </div>
         </div>
-        <CustomLink to='/' linkname='Login'/>
+        <CustomLink to='/login' linkname='Login'/>
       </div>
     </div>
   )
