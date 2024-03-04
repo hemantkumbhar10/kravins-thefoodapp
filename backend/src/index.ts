@@ -1,9 +1,10 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import connectToDatabase from './config/db';
 import userRoutes from './routes/user.routes';
+import authRoutes from './routes/auth.routes';
 
 
 const app = express();
@@ -27,9 +28,9 @@ connectToDatabase();
 //USER ROUTES
 app.use('/api/user', userRoutes);
 
-app.get('/api/test', async (req: Request, res: Response) => {
-    res.send({ message: 'Hello from kitchen!' })
-})
+//AUTH ROUTES
+app.use('/api/auth', authRoutes);
+
 
 app.listen(port, () => {
     console.log()
