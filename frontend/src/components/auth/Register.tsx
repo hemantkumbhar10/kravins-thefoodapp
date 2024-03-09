@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import Input from '../ui/Input';
 import { useMutation } from 'react-query';
 import * as userAuthApiClient from '../../apis/auth.api';
+import { useAppContext } from '../../contexts/useAppContext';
 
 
 
@@ -19,13 +20,15 @@ const Register = () => {
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm<RegisterFormData>();
 
+    const { showToast } = useAppContext();
+
 
     const mutation = useMutation(userAuthApiClient.register, {
         onSuccess: () => {
-            console.log("Registration Successfull!");
+            showToast({ message: "Registration Successfull!", type: 'SUCCESS' });
         },
         onError: (error: Error) => {
-            console.log(error.message);
+            showToast({ message: error.message, type: 'ERROR' });
         }
     })
 
@@ -87,4 +90,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Register;
