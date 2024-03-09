@@ -1,3 +1,4 @@
+import { SignInFormData } from '../components/auth/Login';
 import { RegisterFormData } from '../components/auth/Register';
 
 
@@ -17,6 +18,23 @@ export const register = async (formData: RegisterFormData) => {
 
     if (!response.ok) {
         throw new Error(responseBody.message);
+    }
+}
+
+export const login = async (formData: SignInFormData) => {
+    const response = await fetch(`${URL}/api/auth/login`, {
+
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData),
+    });
+
+    const responsesBody = await response.json();
+    if (!response.ok) {
+        throw new Error(responsesBody.message);
     }
 }
 
