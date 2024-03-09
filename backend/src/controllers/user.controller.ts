@@ -13,7 +13,8 @@ export const register = async (req: Request, res: Response) => {
 
     try {
         let user = await User.findOne({ email: req.body.email });
-        if (user) {
+        let username = await User.findOne({ username: req.body.username });
+        if (user || username) {
             return res.status(400).send({ message: 'User already exists!' });
         }
 
