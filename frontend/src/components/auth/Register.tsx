@@ -3,6 +3,7 @@ import Input from '../ui/Input';
 import { useMutation } from 'react-query';
 import * as userAuthApiClient from '../../apis/auth.api';
 import { useAppContext } from '../../contexts/useAppContext';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -18,14 +19,17 @@ export type RegisterFormData = {
 
 const Register = () => {
 
-    const { register, watch, handleSubmit, formState: { errors } } = useForm<RegisterFormData>();
+    const { register, watch, handleSubmit, formState: { errors }, reset } = useForm<RegisterFormData>();
 
     const { showToast } = useAppContext();
+    const navigate = useNavigate();
 
 
     const mutation = useMutation(userAuthApiClient.register, {
         onSuccess: () => {
+            reset({ firstname: '', lastname: '', username: '', email: '', password: '', confirmPassword: '' });
             showToast({ message: "Registration Successfull!", type: 'SUCCESS' });
+            navigate("/");
         },
         onError: (error: Error) => {
             showToast({ message: error.message, type: 'ERROR' });
