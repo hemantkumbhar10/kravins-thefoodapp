@@ -44,3 +44,10 @@ export const login = async (req: Request, res: Response) => {
 export const validateToken = (req: Request, res: Response) => {
     res.status(200).send({ userId: req.userId });
 }
+
+export const logout = (req: Request, res: Response) => {
+    res.cookie('auth_token', '', {
+        expires: new Date(0) //Thu Jan 01 1970 05:30:00 GMT+0530 (India Standard Time)
+    })
+    res.status(200).send();
+}

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import Input from "../ui/Input"
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as userAuthApiClient from '../../apis/auth.api';
 import { useAppContext } from "../../contexts/useAppContext";
 
@@ -18,8 +18,11 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const queryClient = useQueryClient();
+
     const mutation = useMutation(userAuthApiClient.login, {
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.invalidateQueries('validateToken');
             reset({ email: '', password: '' });
             showToast({ message: 'Welcome to Kravins!', type: 'SUCCESS' });
             navigate('/');
