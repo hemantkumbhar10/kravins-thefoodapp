@@ -40,3 +40,7 @@ export const login = async (req: Request, res: Response) => {
         res.status(500).send({ message: 'Something went wrong!' });
     }
 }
+
+export const validateToken = (req: Request, res: Response) => {
+    res.status(200).send({ userId: req.userId });
+}
