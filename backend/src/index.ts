@@ -31,9 +31,6 @@ app.use(cors(
 //CONNECT TO DATABASE
 connectToDatabase();
 
-app.use('*', (req: Request, res: Response) => {
-    res.status(200).send({ message: 'Welcome to the kitchen!' })
-})
 
 //USER ROUTES
 app.use('/api/user', userRoutes);
