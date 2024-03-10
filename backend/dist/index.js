@@ -49,9 +49,6 @@ app.use((0, cors_1.default)({
 }));
 //CONNECT TO DATABASE
 (0, db_1.default)();
-app.use('/', (req, res) => {
-    res.status(200).send({ message: 'Welcome to the kitchen!' });
-});
 //USER ROUTES
 app.use('/api/user', user_routes_1.default);
 //AUTH ROUTES
