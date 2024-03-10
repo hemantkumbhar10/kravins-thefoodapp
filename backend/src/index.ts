@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -6,6 +6,7 @@ import connectToDatabase from './config/db';
 import userRoutes from './routes/user.routes';
 import authRoutes from './routes/auth.routes';
 import cookieParser from 'cookie-parser';
+
 
 
 const app = express();
@@ -29,6 +30,10 @@ app.use(cors(
 
 //CONNECT TO DATABASE
 connectToDatabase();
+
+app.use('/', (req: Request, res: Response) => {
+    res.status(200).send({ message: 'Welcome to the kitchen!' })
+})
 
 //USER ROUTES
 app.use('/api/user', userRoutes);
