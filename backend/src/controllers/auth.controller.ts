@@ -32,6 +32,7 @@ export const login = async (req: Request, res: Response) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 86400000,
+            sameSite:'none',
         });
 
         return res.status(200).send({ userId: user.id });

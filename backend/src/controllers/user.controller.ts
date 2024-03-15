@@ -28,7 +28,8 @@ export const register = async (req: Request, res: Response) => {
         res.cookie('auth_token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            maxAge: 86400000
+            maxAge: 86400000,
+            sameSite:'none',
         });
 
         return res.status(200).send({ message: 'User registered successfully!' });
