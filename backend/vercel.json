@@ -1,11 +1,11 @@
 {
     "version": 2,
-    "buildCommand":"npm run build",
     "builds": [
       {
         "src": "dist/index.js",
         "use": "@vercel/node",
-        "config": { "includeFiles": ["dist/**"] }
+        "config": { "includeFiles": ["dist/**"] },
+        "buildCommand":"npm run build"
       }
     ],
     "routes": [
