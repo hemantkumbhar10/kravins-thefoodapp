@@ -32,6 +32,7 @@ export const login = async (req: Request, res: Response) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 86400000,
+            sameSite:'lax'
         });
 
         return res.status(200).send({ userId: user.id });
@@ -48,6 +49,7 @@ export const validateToken = (req: Request, res: Response) => {
 export const logout = (req: Request, res: Response) => {
     res.cookie('auth_token', '', {
         expires: new Date(0), //Thu Jan 01 1970 05:30:00 GMT+0530 (India Standard Time)
+        sameSite:'lax'
     })
     res.status(200).send();
 }
