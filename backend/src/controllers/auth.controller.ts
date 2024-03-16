@@ -1,9 +1,15 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response  } from 'express';
 import { validationResult } from 'express-validator';
 import User from '../models/user.model';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+
+declare module 'express-serve-static-core' {
+    interface CookieOptions {
+        partitioned?: boolean;
+    }
+}
 export const login = async (req: Request, res: Response) => {
     const errors = validationResult(req);
 
@@ -33,7 +39,7 @@ export const login = async (req: Request, res: Response) => {
             secure: process.env.NODE_ENV === 'production',
             maxAge: 86400000,
             sameSite: 'none',
-
+            partitioned: true,
         });
 
         return res.status(200).send({ userId: user.id });
