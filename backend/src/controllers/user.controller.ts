@@ -29,8 +29,6 @@ export const register = async (req: Request, res: Response) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 86400000,
-            sameSite:'none',
-            partitioned: true,
         });
 
         return res.status(200).send({ message: 'User registered successfully!' });
