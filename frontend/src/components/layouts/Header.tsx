@@ -17,6 +17,7 @@ const Header = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+
   const mutation = useMutation(userAuthApiClient.logout, {
     onSuccess: async () => {
       await queryClient.invalidateQueries('validateToken');
@@ -77,7 +78,7 @@ const Header = () => {
       </div>
 
       <Modal isModalOpen={isModalOpen} modalOpenHandler={modalOpenHandler} >
-        <CreatePost/>
+        <CreatePost modalOpenHandler={modalOpenHandler}/>
       </Modal>
     </div>
   )

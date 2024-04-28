@@ -32,7 +32,7 @@ test('should allow user to sign up', async ({ page }) => {
 
     await expect(page.getByText('Registration Successfull!')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Log out' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Create Post' })).toBeVisible();
+    await expect(page.getByText('Create Post')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Kravins' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Notifications' })).toBeVisible();
 })
@@ -43,13 +43,13 @@ test('should allow user to log in', async ({ page }) => {
 
     await page.getByRole('link', { name: 'Login' }).click();
     await expect(page.getByText('Login').first()).toBeVisible();
-    await page.locator("[name='email']").fill("testFirstName@testLastName.com");
+    await page.locator("[name='email']").fill("testFirstName5767@email.com");
     await page.locator("[name='password']").fill("Test@123");
     await page.getByRole('button', { name: 'Login' }).click();
 
     await expect(page.getByText('Welcome to Kravins!')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Log out' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Create Post' })).toBeVisible();
+    await expect(page.getByText('Create Post')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Kravins' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Notifications' })).toBeVisible();
 })

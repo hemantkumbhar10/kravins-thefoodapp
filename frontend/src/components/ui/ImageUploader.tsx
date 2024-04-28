@@ -1,6 +1,5 @@
 import { useFormContext } from 'react-hook-form';
 import { UserPersonalPostType } from '../CreatePost';
-import { MouseEvent } from 'react';
 
 
 const ImageUploader = () => {
@@ -36,16 +35,19 @@ const ImageUploader = () => {
 
         <input
           type="file"
-          multiple accept='image/*'
+          multiple 
+          accept='image/*'
           className='w-full p-2.5 text-gray-700 font-normal'
-          {...register('images', {
-            validate: (images) => {
-              const arrLength = images.length + (existingImages?.length || 0);
+          {...register('postImages', {
+            validate: (postImages) => {
+              const arrLength = postImages.length + (existingImages?.length || 0);
               if (arrLength === 0) {
                 return "Ateast one image is required!"
               }
-              if (arrLength > 6) {
-                return "Cannot upload images more than 4!"
+              if (arrLength > 3) {
+                console.log(existingImages?.length || 0);
+                console.log(postImages);
+                return "Cannot upload more than 3 images!"
               }
               return true;
             }
@@ -53,11 +55,11 @@ const ImageUploader = () => {
         />
       </div>
       {errors.images && (
-        <span className='text-red-500 text-xs font-bold'>{errors.images.message}</span>
+        <span className='text-red-500 text-xs font-bold pl-1'>{errors.images.message}</span>
       )}
     </div>
   )
 }
 
 
-export default ImageUploader
+export default ImageUploader;

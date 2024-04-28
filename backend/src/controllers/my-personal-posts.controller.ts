@@ -6,7 +6,6 @@ import { UserPersonalPostType } from '../helpers/types';
 
 
 export const myPersonalPost = async (req: Request, res: Response) => {
-   console.log("Inside post controller");
     try {
         const postImages = req.files as Express.Multer.File[];
 
