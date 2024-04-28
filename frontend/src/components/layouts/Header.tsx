@@ -7,8 +7,12 @@ import { IoIosNotifications } from "react-icons/io";
 import { useAppContext } from '../../contexts/useAppContext';
 import { useMutation, useQueryClient } from 'react-query';
 import * as userAuthApiClient from '../../apis/auth.api';
+import { useState } from 'react';
+import Modal from '../ui/Modal';
+import CreatePost from '../CreatePost';
 
 const Header = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { isLoggedIn, showToast } = useAppContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -28,6 +32,11 @@ const Header = () => {
     mutation.mutate();
   }
 
+  const modalOpenHandler = () => {
+    setIsModalOpen(!isModalOpen);
+  }
+
+
   return (
     <div className='py-3 px-5 bg-tomato flex items-center justify-center'>
       <div className='container flex justify-between items-center'>
@@ -35,12 +44,12 @@ const Header = () => {
           <Link to="/" className=''><img src={logo} alt="Kravins logo" aria-hidden width={40} height={40} className='md:w-12' /></Link>
           {isLoggedIn &&
             <div className="flex flex-row items-center justify-start md:ml-10">
-              <Link to='/' className="flex flex-col items-center justify-between ml-3 hover:scale-105">
+              <div onClick={modalOpenHandler} className="flex flex-col items-center justify-between ml-3 hover:scale-105">
                 <span className='block m-auto' aria-hidden>
                   <IoCreate className='text-white text-2xl' />
                 </span>
                 <span className='text-sm text-white m-auto'>Create Post</span>
-              </Link>
+              </div>
               <Link to='/' className="flex flex-col items-center justify-between ml-3 hover:scale-105">
                 <span className='block m-auto' aria-hidden>
                   <PiBowlFoodFill className='text-white text-2xl' />
@@ -66,6 +75,10 @@ const Header = () => {
           <CustomLink to='/login' linkname='Login' />
         }
       </div>
+
+      <Modal isModalOpen={isModalOpen} modalOpenHandler={modalOpenHandler} >
+        <CreatePost/>
+      </Modal>
     </div>
   )
 }
