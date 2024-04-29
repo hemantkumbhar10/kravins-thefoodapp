@@ -19,7 +19,7 @@ const CreatePost = ({modalOpenHandler}: CreatePostProps) => {
     }
     
     return (
-        <div className='w-2/4 h-auto bg-white rounded-xl' onClick={handleClick}>
+        <div className='w-full h-4/6 md:w-2/4 md:h-auto bg-white rounded-xl' onClick={handleClick}>
 
             <h3 className='text-xl font-bold p-5 border-b-2 border-gray-200'>Cook Something!</h3>
             <PostForm modalOpenHandler={modalOpenHandler}/>
