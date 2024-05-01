@@ -11,7 +11,6 @@ type ToastMessage = {
 export type AppContextType = {
     showToast: (toastMessage: ToastMessage) => void;
     isLoggedIn: boolean;
-    userAvatar?: string;
     setUsersAvatar: (userAvatar: string) => void;
 }
 
@@ -21,7 +20,6 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 
     const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userAvatar, setUserAvatar] = useState("");
 
 
     useQuery('validateToken', userAuthApiClient.validateToken, {
@@ -36,9 +34,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
                 setToast(toastMessage);
             },
             isLoggedIn,
-            userAvatar,
             setUsersAvatar: (userAvatar) => {
-                setUserAvatar(userAvatar);
+                localStorage.setItem("userAvatar", userAvatar);
             }
         }}>
             {children}

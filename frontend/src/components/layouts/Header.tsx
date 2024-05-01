@@ -23,8 +23,10 @@ const profileDropdownOptions = [
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isLoggedIn, showToast, userAvatar } = useAppContext();
+  const { isLoggedIn, showToast } = useAppContext();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+
+  const userAvatar = localStorage.getItem('userAvatar')!;
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
