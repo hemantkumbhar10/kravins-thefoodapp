@@ -100,7 +100,7 @@ const Header = () => {
                 <img
                   src={userAvatar}
                   alt="user profile avatar"
-                  className='w-11 rounded-full'
+                  className='w-10 md:w-11 rounded-full'
                   role='button'
                   tabIndex={0}
                 />
