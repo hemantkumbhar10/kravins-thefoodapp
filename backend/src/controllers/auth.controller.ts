@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import User from '../models/user.model';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { getUsersAvatarData } from '../helpers/getUserAvatarData.helper';
 
 
 export const login = async (req: Request, res: Response) => {
@@ -35,7 +36,23 @@ export const login = async (req: Request, res: Response) => {
             maxAge: 86400000,
         });
 
-        return res.status(200).send({ userId: user.id });
+        const userAvatarData = await getUsersAvatarData(user.id);
+        const userInfo = {
+            _id: user.id,
+            email:user.email,
+            username: user.username,
+            firstname: user.firstname,
+            lastname:user.lastname,
+        }
+
+
+        const userProfile = {
+            userInfo,
+            ...userAvatarData
+        }
+
+
+        return res.status(200).json(userProfile);
     } catch (e) {
         console.log(e);
         res.status(500).send({ message: 'Something went wrong!' });

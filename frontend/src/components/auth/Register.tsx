@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import * as userAuthApiClient from '../../apis/auth.api';
 import { useAppContext } from '../../contexts/useAppContext';
 import { useNavigate } from 'react-router-dom';
+import { UserProfileResponseType } from '../../types/BackendTypes';
 
 
 
@@ -21,14 +22,15 @@ const Register = () => {
 
     const { register, watch, handleSubmit, formState: { errors }, reset } = useForm<RegisterFormData>();
 
-    const { showToast } = useAppContext();
+    const { showToast,setUsersAvatar } = useAppContext();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
 
     const mutation = useMutation(userAuthApiClient.register, {
-        onSuccess: async () => {
+        onSuccess: async (data:UserProfileResponseType) => {
             await queryClient.invalidateQueries('validateToken');
+            setUsersAvatar(data.avatar);
             reset({ firstname: '', lastname: '', username: '', email: '', password: '', confirmPassword: '' });
             showToast({ message: "Registration Successfull!", type: 'SUCCESS' });
             navigate("/");

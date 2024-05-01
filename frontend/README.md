@@ -28,3 +28,17 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+
+TASK
+
+User profile
+get userprofile
+show avartars and basic userinfo
+
+then search user functionality
+add user as a friend
+remove user as a friend
+
+
+avatar and userprofile get requests done in backend time to use redux or something to make use of this in frontend now....

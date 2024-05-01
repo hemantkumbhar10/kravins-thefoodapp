@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import User from '../models/user.model';
 import jwt from 'jsonwebtoken';
+import UsersAvatarSigned from '../models/user-avatars.model';
+import { getUsersAvatarData } from '../helpers/getUserAvatarData.helper';
 
 export const register = async (req: Request, res: Response) => {
 
@@ -19,11 +21,16 @@ export const register = async (req: Request, res: Response) => {
         }
 
         user = new User(req.body);
+
         await user.save();
 
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, {
             expiresIn: '1D'
         });
+
+        const avatarName = new UsersAvatarSigned({ userId: user.id, avatar: 'cooltomato' });
+        await avatarName.save();
+        const userAvatarData = await getUsersAvatarData(user.id);
 
         res.cookie('auth_token', token, {
             httpOnly: true,
@@ -31,7 +38,12 @@ export const register = async (req: Request, res: Response) => {
             maxAge: 86400000,
         });
 
-        return res.status(200).send({ message: 'User registered successfully!' });
+        const userProfile = {
+            user,
+            ...userAvatarData
+        }
+
+        return res.status(200).json(userProfile);
 
     } catch (e) {
         console.log(e);
@@ -44,13 +56,23 @@ export const me = async (req: Request, res: Response) => {
     const userId = req.userId;
     try {
         //WE DONT WANT TO INCLUDE PASSWORD IN RESPONSE
-        const user = await User.findById(userId).select('password');
+        const user = await User.findById(userId).select('-password');
         if (!user) {
             return res.status(400).send({ message: 'User not found!' });
         }
-        res.status(200).json(user);
+       
+        const userAvatarData = await getUsersAvatarData(userId);
+
+        const userProfile = {
+            user,
+            ...userAvatarData
+        }
+
+        console.log('userprofile--------------->  ', userProfile);
+        res.status(200).json(userProfile);
     } catch (e) {
         console.log(e);
         res.status(500).send({ message: 'Something went wrong!' });
     }
 }
+

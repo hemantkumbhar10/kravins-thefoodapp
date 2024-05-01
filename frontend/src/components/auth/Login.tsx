@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import * as userAuthApiClient from '../../apis/auth.api';
 import { useAppContext } from "../../contexts/useAppContext";
+import {UserProfileResponseType} from '../../types/BackendTypes';
 
 export type SignInFormData = {
     email: string;
@@ -14,15 +15,16 @@ const Login = () => {
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm<SignInFormData>();
 
-    const { showToast } = useAppContext();
+    const { showToast, setUsersAvatar } = useAppContext();
 
     const navigate = useNavigate();
 
     const queryClient = useQueryClient();
 
     const mutation = useMutation(userAuthApiClient.login, {
-        onSuccess: async () => {
+        onSuccess: async (data:UserProfileResponseType) => {
             await queryClient.invalidateQueries('validateToken');
+            setUsersAvatar(data.avatar);
             reset({ email: '', password: '' });
             showToast({ message: 'Welcome to Kravins!', type: 'SUCCESS' });
             navigate('/');

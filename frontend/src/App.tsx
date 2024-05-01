@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import Layout from './layouts/Layout'
 import Auth from './pages/Auth'
 import { useAppContext } from './contexts/useAppContext'
+import MyProfile from './pages/MyProfile'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         {
           isLoggedIn && <>
             {/* <Route path='/add-mypost' element={<Layout><CreatePost /></Layout>} />  DELETE THIS LATER*/} 
+            <Route path='/myProfile' element={<Layout><MyProfile /></Layout>} />
           </>
         }
 

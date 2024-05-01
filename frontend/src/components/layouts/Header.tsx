@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/svgs/Logo-fill-color.svg';
 import CustomLink from '../ui/CustomLink';
@@ -13,11 +13,22 @@ import * as userAuthApiClient from '../../apis/auth.api';
 import Modal from '../ui/Modal';
 import CreatePost from '../CreatePost';
 
+//DUMMY USERPROFILE IMAGE
+// import doodlebg from '../../assets/images/ToyFaces_man.png';
+
+
+const profileDropdownOptions = [
+  { value: 'myProfile', label: 'Profile' },
+]
+
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isLoggedIn, showToast } = useAppContext();
+  const { isLoggedIn, showToast, userAvatar } = useAppContext();
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const mutation = useMutation(userAuthApiClient.logout, {
     onSuccess: async () => {
@@ -37,6 +48,19 @@ const Header = () => {
   const modalOpenHandler = () => {
     setIsModalOpen(!isModalOpen);
   }
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsProfileDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className='py-3 px-5 bg-tomato'>
@@ -66,27 +90,36 @@ const Header = () => {
             </div>
           }
 
-          {isLoggedIn ?
-            <button
-              className='ml-3 bg-white text-sm md:text-md font-normal flex items-center rounded-md text-tomato  px-3 py-1 hover:bg-gray-100 hover:scale-105 transition ease-linear duration-100'
-              onClick={onLogout}
-            >
-              Log out
-            </button> :
-            <CustomLink to='/login' linkname='Login' className='' />
+          {!isLoggedIn && <CustomLink to='/login' linkname='Login' />}
+          {
+            isLoggedIn && <>
+              <div onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                ref={dropdownRef}
+                className='ml-2 relative'
+              >
+                <img
+                  src={userAvatar}
+                  alt="user profile avatar"
+                  className='w-11 rounded-full'
+                  role='button'
+                  tabIndex={0}
+                />
+                {isProfileDropdownOpen &&
+
+                  <ul className='absolute top-14 right-0 bg-orange-100 p-2 px-3 rounded-md w-24'>
+                    {profileDropdownOptions.map((option, index) => {
+                      return (
+                        <li key={option.label + index} className='w-full'><Link to={`/${option.value}`} className='text-tomato text-sm'>{option.label}</Link></li>
+                      )
+                    })}
+                    <li onClick={onLogout} className='cursor-pointer text-tomato text-sm w-full'>Log out</li>
+                  </ul>
+                }
+              </div>
+            </>
           }
         </div>
       </div>
-
-      {/* Menu button for user profile and logout functionality later */}
-      {/* <div className="fixed right-5 top-5 md:hidden" onClick={}>
-        <span className='m-auto' aria-hidden>
-          {isMobileMenuOpen ? <IoCloseOutline className='text-white text-2xl' /> :
-            <IoMenu className='text-white text-2xl' />}
-        </span>
-      </div> */}
-
-
       <Modal isModalOpen={isModalOpen} modalOpenHandler={modalOpenHandler} >
         <CreatePost modalOpenHandler={modalOpenHandler} />
       </Modal>

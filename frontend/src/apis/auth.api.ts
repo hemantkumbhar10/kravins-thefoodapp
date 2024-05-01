@@ -19,6 +19,7 @@ export const register = async (formData: RegisterFormData) => {
     if (!response.ok) {
         throw new Error(responseBody.message);
     }
+    return responseBody;
 }
 
 export const login = async (formData: SignInFormData) => {
@@ -36,6 +37,7 @@ export const login = async (formData: SignInFormData) => {
     if (!response.ok) {
         throw new Error(responsesBody.message);
     }
+    return responsesBody;
 }
 
 export const validateToken = async () => {
