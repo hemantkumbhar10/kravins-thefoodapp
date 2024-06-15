@@ -1,4 +1,4 @@
-export type UserProfileResponseType ={
+export type UserProfileResponseType = {
     user: {
         _id: string;
         email: string;
@@ -7,22 +7,9 @@ export type UserProfileResponseType ={
         lastname: string;
     };
     avatar: string;
-    avatarOptions: [
-        {
-            _id: string;
-            cooltomato: string;
-            babycoolmango: string;
-            vibingmelon: string;
-            chadcarrot: string;
-            cutepeach: string;
-            selfloveorange: string;
-            badassmelon: string;
-            victoryfruit: string;
-            smolkarot: string;
-            bossylemon: string;
-
-        }
-    ]
+    avatarOptions: [{
+        [key: string]: string;
+    }];
 }
 
 

@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { AvatarState } from '../../store/avatar-slice';
 import logo from '../../assets/svgs/Logo-fill-color.svg';
 import CustomLink from '../ui/CustomLink';
 import { IoCreate } from "react-icons/io5";
@@ -13,9 +15,6 @@ import * as userAuthApiClient from '../../apis/auth.api';
 import Modal from '../ui/Modal';
 import CreatePost from '../CreatePost';
 
-//DUMMY USERPROFILE IMAGE
-// import doodlebg from '../../assets/images/ToyFaces_man.png';
-
 
 const profileDropdownOptions = [
   { value: 'myProfile', label: 'Profile' },
@@ -25,8 +24,7 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isLoggedIn, showToast } = useAppContext();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-
-  const userAvatar = localStorage.getItem('userAvatar')!;
+  const user_avatar = useSelector((state: { avatar: AvatarState }) => state.avatar.user_avatar);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -100,7 +98,7 @@ const Header = () => {
                 className='ml-2 relative'
               >
                 <img
-                  src={userAvatar}
+                  src={user_avatar}
                   alt="user profile avatar"
                   className='w-10 md:w-11 rounded-full'
                   role='button'

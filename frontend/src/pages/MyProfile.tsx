@@ -19,7 +19,6 @@ const MyProfile = () => {
   console.log(myProfile);
 
 
-
   const modalOpenHandler = () => {
     setIsModalOpen(!isModalOpen);
   }
@@ -54,17 +53,7 @@ const MyProfile = () => {
         />
       </div>
       <Modal modalOpenHandler={modalOpenHandler} isModalOpen={isModalOpen}>
-        <Avatars
-          cooltomato={myProfile ? myProfile?.avatarOptions[0].cooltomato : ''}
-          babycoolmango={myProfile ? myProfile?.avatarOptions[0].babycoolmango : ''}
-          vibingmelon={myProfile ? myProfile?.avatarOptions[0].vibingmelon : ''}
-          chadcarrot={myProfile ? myProfile?.avatarOptions[0].chadcarrot : ''}
-          cutepeach={myProfile ? myProfile?.avatarOptions[0].cutepeach : ''}
-          selfloveorange={myProfile ? myProfile?.avatarOptions[0].selfloveorange : ''}
-          badassmelon={myProfile ? myProfile?.avatarOptions[0].badassmelon : ''}
-          victoryfruit={myProfile ? myProfile?.avatarOptions[0].victoryfruit : ''}
-          smolkarot={myProfile ? myProfile?.avatarOptions[0].smolkarot : ''}
-          bossylemon={myProfile ? myProfile?.avatarOptions[0].bossylemon : ''}
+        <Avatars avatars={myProfile ? myProfile.avatarOptions[0] : {}}
         />
       </Modal>
     </div>

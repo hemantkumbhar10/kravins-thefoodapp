@@ -5,6 +5,8 @@ import * as userAuthApiClient from '../../apis/auth.api';
 import { useAppContext } from '../../contexts/useAppContext';
 import { useNavigate } from 'react-router-dom';
 import { UserProfileResponseType } from '../../types/BackendTypes';
+import { useDispatch } from 'react-redux';
+import { avatarActions } from '../../store/avatar-slice';
 
 
 
@@ -21,8 +23,9 @@ export type RegisterFormData = {
 const Register = () => {
 
     const { register, watch, handleSubmit, formState: { errors }, reset } = useForm<RegisterFormData>();
+    const dispatch = useDispatch();
 
-    const { showToast,setUsersAvatar } = useAppContext();
+    const { showToast } = useAppContext();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
@@ -30,7 +33,7 @@ const Register = () => {
     const mutation = useMutation(userAuthApiClient.register, {
         onSuccess: async (data:UserProfileResponseType) => {
             await queryClient.invalidateQueries('validateToken');
-            setUsersAvatar(data.avatar);
+            dispatch(avatarActions.updateUserAvatar(data.avatar));
             reset({ firstname: '', lastname: '', username: '', email: '', password: '', confirmPassword: '' });
             showToast({ message: "Registration Successfull!", type: 'SUCCESS' });
             navigate("/");

@@ -5,6 +5,8 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { AppContextProvider } from './contexts/AuthContext.tsx'
+import { Provider } from 'react-redux';
+import store from './store/index.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +21,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <AppContextProvider>
+          <Provider store={store}>
           <App />
+          </Provider>
         </AppContextProvider>
       </QueryClientProvider>
     </BrowserRouter>

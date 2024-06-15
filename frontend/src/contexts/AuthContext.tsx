@@ -11,7 +11,6 @@ type ToastMessage = {
 export type AppContextType = {
     showToast: (toastMessage: ToastMessage) => void;
     isLoggedIn: boolean;
-    setUsersAvatar: (userAvatar: string) => void;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -34,9 +33,6 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
                 setToast(toastMessage);
             },
             isLoggedIn,
-            setUsersAvatar: (userAvatar) => {
-                localStorage.setItem("userAvatar", userAvatar);
-            }
         }}>
             {children}
             {/* NOTIFICATION TOAST */}

@@ -3,42 +3,37 @@ import React from "react";
 
 type AvatarsProps =
     {
-        cooltomato: string;
-        babycoolmango: string;
-        vibingmelon: string;
-        chadcarrot: string;
-        cutepeach: string;
-        selfloveorange: string;
-        badassmelon: string;
-        victoryfruit: string;
-        smolkarot: string;
-        bossylemon: string;
+
+        avatars: {
+            [key: string]: string;
+        };
     }
 
 
 
-export const Avatars: React.FC<AvatarsProps> = ({ cooltomato, babycoolmango, vibingmelon,
-    chadcarrot, cutepeach, selfloveorange, badassmelon, victoryfruit, smolkarot,
-    bossylemon }) => {
+export const Avatars: React.FC<AvatarsProps> = ({ avatars }) => {
 
     // const avatar = localStorage.getItem('userAvatar')!;
 
     return (
-        <div className='w-full h-4/6 md:w-2/4 md:h-auto bg-white rounded-xl'>
+        <div className='w-full md:w-2/4  bg-white rounded-xl'>
             <h3 className='text-xl font-bold p-5 border-b-2 border-gray-200 text-tomato'>Choose Your Avatar</h3>
-            <div className="w-full flex justify-center items-center">
-                <div className='p-3 mx-3 border-b-2 rounded-md grid grid-cols-5 grid-rows-2 gap-x-4 gap-y-4'>
-                    <img src={cooltomato} alt="" className="w-[90px] rounded-full" />
-                    <img src={babycoolmango} alt="" className="w-[90px] rounded-full" />
-                    <img src={chadcarrot} alt="" className="w-[90px] rounded-full" />
-                    <img src={cutepeach} alt="" className="w-[90px] rounded-full" />
-                    <img src={selfloveorange} alt="" className="w-[90px] rounded-full" />
-                    <img src={badassmelon} alt="" className="w-[90px] rounded-full" />
-                    <img src={victoryfruit} alt="" className="w-[90px] rounded-full" />
-                    <img src={smolkarot} alt="" className="w-[90px] rounded-full" />
-                    <img src={vibingmelon} alt="" className="w-[90px] rounded-full" />
-                    <img src={bossylemon} alt="" className="w-[90px] rounded-full" />
+            <div className="w-full flex flex-col justify-center items-center">
+                <div className='p-3 mx-3 grid grid-cols-5 grid-rows-2 gap-x-4 gap-y-4'>
+                    {
+                       Object.keys(avatars).map((key)=>(
+                        key!=='_id' && <img key={key} src={avatars[key]} alt={`${key} avatar`} className="w-[90px] rounded-full cursor-pointer" role="button" />
+                       ))
+                    }
                 </div>
+                <span className="flex justify-end mt-3 mb-5">
+                    <button type='submit' className='text-sm bg-tomato text-white p-2 font-bold hover:bg-orange-600 rounded-md px-8'>
+                        Update Avatar
+                        {/* {myPost ?
+                            <>{isLoading ? "Updating Post..." : "Update Post"}</> :
+                            <>{isLoading ? "Creating Post..." : "Create Post"}</>} */}
+                    </button>
+                </span>
             </div>
         </div>
     )
