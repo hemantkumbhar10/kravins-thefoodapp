@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { AvatarState } from '../../store/avatar-slice';
 import logo from '../../assets/svgs/Logo-fill-color.svg';
 import CustomLink from '../ui/CustomLink';
 import { IoCreate } from "react-icons/io5";
@@ -14,6 +12,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import * as userAuthApiClient from '../../apis/auth.api';
 import Modal from '../ui/Modal';
 import CreatePost from '../CreatePost';
+import { useAppSelector } from '../../store/dispatchHooks';
 
 
 const profileDropdownOptions = [
@@ -24,7 +23,7 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isLoggedIn, showToast } = useAppContext();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const user_avatar = useSelector((state: { avatar: AvatarState }) => state.avatar.user_avatar);
+  const user_avatar = useAppSelector(state=> state.userprofile.user_avatar);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();

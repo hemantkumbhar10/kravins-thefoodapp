@@ -5,15 +5,13 @@ import { Avatars } from '../components/Avatars';
 import { useQuery } from 'react-query';
 
 import * as userProfileApi from '../apis/myprofile.api';
-
-
-
-
-
+import { useAppSelector } from '../store/dispatchHooks';
 
 const MyProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const  {_id, email, username, firstname, lastname, user_avatar, avatarOptions} = useAppSelector(state => state.userprofile);
+  
   const { data: myProfile } = useQuery('fetchQuery', () => userProfileApi.fetchMyProfile());
 
   console.log(myProfile);
@@ -30,9 +28,9 @@ const MyProfile = () => {
           <div className='aspect-square w-full h-full bg-tomato' style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}>
           </div>
           <div className='absolute top-5 left-0 w-full h-full flex flex-col justify-center items-center'>
-            <img src={myProfile?.avatar} alt="" className='w-[90px] h-[90px] rounded-full cursor-pointer' onClick={modalOpenHandler} />
-            <h2 className='text-lg font-bold'>{myProfile?.user.firstname + ' ' + myProfile?.user.lastname}</h2>
-            <p className='text-sm'>@{myProfile?.user.username}</p>
+            <img src={user_avatar} alt="" className='w-[90px] h-[90px] rounded-full cursor-pointer' onClick={modalOpenHandler} />
+            <h2 className='text-lg font-bold'>{firstname + ' ' + lastname}</h2>
+            <p className='text-sm'>@{username}</p>
           </div>
         </div>
         <ul className='w-full'>
@@ -45,15 +43,16 @@ const MyProfile = () => {
       </div>
       <div className='mt-6 md:ml-56'>
         <UserInformation
-          _id={myProfile?.user._id ? myProfile?.user._id : ''}
-          email={myProfile?.user.email ? myProfile?.user.email : ''}
-          firstname={myProfile?.user.firstname ? myProfile?.user.firstname : ''}
-          lastname={myProfile?.user.lastname ? myProfile?.user.lastname : ''}
-          username={myProfile?.user.username ? myProfile?.user.username : ''}
+          _id={_id}
+          email={email}
+          firstname={firstname}
+          lastname={lastname}
+          username={username}
         />
       </div>
       <Modal modalOpenHandler={modalOpenHandler} isModalOpen={isModalOpen}>
-        <Avatars avatars={myProfile ? myProfile.avatarOptions[0] : {}}
+        {/* Its a 1 list inside list so given its index avatarOptions[0] to retrieve it(bad DB design) */}
+        <Avatars avatars={avatarOptions[0]}
         />
       </Modal>
     </div>

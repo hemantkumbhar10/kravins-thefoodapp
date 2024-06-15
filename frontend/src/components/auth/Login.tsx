@@ -4,9 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import * as userAuthApiClient from '../../apis/auth.api';
 import { useAppContext } from "../../contexts/useAppContext";
-import { UserProfileResponseType } from '../../types/BackendTypes';
-import { useDispatch } from "react-redux";
-import { avatarActions } from "../../store/avatar-slice";
 
 export type SignInFormData = {
     email: string;
@@ -22,12 +19,10 @@ const Login = () => {
     const navigate = useNavigate();
 
     const queryClient = useQueryClient();
-    const dispatch = useDispatch();
 
     const mutation = useMutation(userAuthApiClient.login, {
-        onSuccess: async (data: UserProfileResponseType) => {
+        onSuccess: async () => {
             await queryClient.invalidateQueries('validateToken');
-            dispatch(avatarActions.updateUserAvatar(data.avatar));
             reset({ email: '', password: '' });
             showToast({ message: 'Welcome to Kravins!', type: 'SUCCESS' });
             navigate('/');

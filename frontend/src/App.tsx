@@ -5,10 +5,22 @@ import Layout from './layouts/Layout'
 import Auth from './pages/Auth'
 import { useAppContext } from './contexts/useAppContext'
 import MyProfile from './pages/MyProfile'
+import { useEffect } from 'react'
+
+import { getUserProfileData } from './store/userProfile-slice';
+import { useAppDispatch } from './store/dispatchHooks'
 
 function App() {
 
   const { isLoggedIn } = useAppContext();
+  const dispatch = useAppDispatch();
+
+
+  useEffect(()=>{
+    if(isLoggedIn){
+      dispatch(getUserProfileData());
+    }
+  },[isLoggedIn, dispatch])
 
   return (
     <>
