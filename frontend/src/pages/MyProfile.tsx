@@ -2,19 +2,12 @@ import { useState } from 'react'
 import { UserInformation } from '../components/UserInformation';
 import Modal from '../components/ui/Modal';
 import { Avatars } from '../components/Avatars';
-import { useQuery } from 'react-query';
-
-import * as userProfileApi from '../apis/myprofile.api';
 import { useAppSelector } from '../store/dispatchHooks';
 
 const MyProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const  {_id, email, username, firstname, lastname, user_avatar, avatarOptions} = useAppSelector(state => state.userprofile);
-  
-  const { data: myProfile } = useQuery('fetchQuery', () => userProfileApi.fetchMyProfile());
-
-  console.log(myProfile);
 
 
   const modalOpenHandler = () => {
