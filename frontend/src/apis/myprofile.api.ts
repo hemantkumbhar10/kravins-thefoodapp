@@ -1,3 +1,4 @@
+import { UserInfoPropType } from "../components/UserInformation";
 import { UserProfileResponseType, UserAvatarResponseType } from "../types/BackendTypes";
 
 const URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
@@ -17,6 +18,24 @@ export const fetchMyProfile = async (): Promise<UserProfileResponseType> => {
     }
 
     return response.json();
+}
+
+export const updateMyProfile = async (formData: UserInfoPropType): Promise<UserProfileResponseType> => {
+    const response = await fetch(`${URL}/api/user/updateUserInfo`, {
+        credentials: "include",
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    });
+    const responseBody = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseBody.message);
+    }
+
+    return responseBody;
 }
 
 export const updateMyAvatar = async (avatar: UpdateAvatarType): Promise<UserAvatarResponseType> => {

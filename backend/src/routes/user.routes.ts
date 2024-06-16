@@ -1,6 +1,6 @@
 import express from 'express';
 import { check } from 'express-validator';
-import { me, register } from '../controllers/user.controller';
+import { me, register, updateUserData } from '../controllers/user.controller';
 import { verifyToken } from '../middlewares/verifytoken.middleware';
 
 const router = express.Router();
@@ -19,5 +19,17 @@ router.post('/register',
 
     register
 );
+
+router.put(
+    '/updateUserInfo',
+    verifyToken,
+    [
+        check('firstname', 'Firstname is required!').isString(),
+        check('lastname', 'Lastname is required!').isString(),
+        check('username', 'Username is required!').isString(),
+        check('email', 'Email is invalid!').isEmail()
+    ],
+    updateUserData
+)
 
 export default router;

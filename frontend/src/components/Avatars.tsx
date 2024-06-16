@@ -43,7 +43,9 @@ export const Avatars: React.FC<AvatarsProps> = ({ modalCloseHandler, avatars }) 
 
     const updateUserAvatar = () => {
         const avatarName = Object.keys(avatars).find((key) => selectedAvatar === avatars[key]);
-        mutation.mutate({ avatarName: avatarName });
+        if (selectedAvatar !== userAvatar) {
+            mutation.mutate({ avatarName: avatarName });
+        }
         modalCloseHandler();
     }
 
@@ -51,7 +53,7 @@ export const Avatars: React.FC<AvatarsProps> = ({ modalCloseHandler, avatars }) 
         <div>
             <h3 className='text-xl font-bold pl-5 pb-5 border-b-2 border-gray-200 text-tomato'>Choose Your Avatar</h3>
             <div className="w-full flex flex-col justify-center items-center">
-                <div className='p-3 mx-3 grid grid-cols-5 grid-rows-2 gap-x-4 gap-y-4'>
+                <div className='p-3 mx-3 grid grid-cols-3 md:grid-cols-5 md:grid-rows-2 gap-x-4 gap-y-4'>
                     {
                         Object.keys(avatars).map((key) => (
                             key !== '_id' &&

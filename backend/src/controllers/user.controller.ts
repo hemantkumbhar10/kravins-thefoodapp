@@ -51,6 +51,27 @@ export const register = async (req: Request, res: Response) => {
     }
 };
 
+export const updateUserData = async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).send({ message: errors.array() });
+    }
+    try {
+        const userId = req.userId;
+        const update = { firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, username: req.body.username }
+        const updatedUser = await User.findByIdAndUpdate(userId, update);
+        const user = await User.findById(userId).select('-password');
+        const userAvatarData = await getUsersAvatarData(userId);
+        const userProfile = {
+            user,
+            ...userAvatarData
+        }
+        return res.status(200).json(userProfile);
+    } catch (e) {
+        return res.status(500).send({ message: 'Something went wrong!' });
+    }
+}
+
 
 export const me = async (req: Request, res: Response) => {
     const userId = req.userId;
@@ -60,15 +81,13 @@ export const me = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(400).send({ message: 'User not found!' });
         }
-       
+
         const userAvatarData = await getUsersAvatarData(userId);
 
         const userProfile = {
             user,
             ...userAvatarData
         }
-
-        console.log('userprofile--------------->  ', userProfile);
         res.status(200).json(userProfile);
     } catch (e) {
         console.log(e);
