@@ -12,6 +12,8 @@ export type UserProfileResponseType = {
     }];
 }
 
+export type UserAvatarResponseType = { updatedAvatar: string }
+
 
 export type UserPersonalBEPostType = {
     _id: string;

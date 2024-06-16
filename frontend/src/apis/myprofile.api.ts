@@ -1,15 +1,36 @@
-import { UserProfileResponseType } from "../types/BackendTypes";
+import { UserProfileResponseType, UserAvatarResponseType } from "../types/BackendTypes";
 
 const URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
-export const fetchMyProfile = async ():Promise<UserProfileResponseType> => {
+export type UpdateAvatarType = {
+    avatarName: string | undefined
+}
+
+export const fetchMyProfile = async (): Promise<UserProfileResponseType> => {
     const response = await fetch(`${URL}/api/user/me`, {
-        credentials:'include',
+        credentials: 'include',
         method: 'GET',
     });
 
     if (!response.ok) {
         throw new Error('Could not fetch user profile!');
+    }
+
+    return response.json();
+}
+
+export const updateMyAvatar = async (avatar: UpdateAvatarType): Promise<UserAvatarResponseType> => {
+    const response = await fetch(`${URL}/api/avatars/changeAvatar`, {
+        credentials: 'include',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(avatar)
+    });
+
+    if (!response.ok) {
+        throw new Error('Could not update avatar!');
     }
 
     return response.json();

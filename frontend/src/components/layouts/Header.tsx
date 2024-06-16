@@ -20,10 +20,10 @@ const profileDropdownOptions = [
 ]
 
 const Header = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { isLoggedIn, showToast } = useAppContext();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const user_avatar = useAppSelector(state=> state.userprofile.user_avatar);
+  const dialog = useRef<HTMLDialogElement>(null);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -45,7 +45,11 @@ const Header = () => {
   }
 
   const modalOpenHandler = () => {
-    setIsModalOpen(!isModalOpen);
+    dialog.current?.showModal();
+  }
+
+  const modalCloseHandler = () => {
+    dialog.current?.close();
   }
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -119,8 +123,8 @@ const Header = () => {
           }
         </div>
       </div>
-      <Modal isModalOpen={isModalOpen} modalOpenHandler={modalOpenHandler} >
-        <CreatePost modalOpenHandler={modalOpenHandler} />
+      <Modal ref={dialog}>
+        <CreatePost modalCloseHandler={modalCloseHandler} />
       </Modal>
     </div>
   )

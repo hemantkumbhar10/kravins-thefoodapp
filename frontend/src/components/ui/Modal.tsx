@@ -1,25 +1,19 @@
 import React from 'react'
-
+import { forwardRef } from 'react'
+import { IoMdCloseCircle } from "react-icons/io";
 
 type ModalProps = {
-    isModalOpen: boolean;
-    modalOpenHandler: () => void;
     children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isModalOpen, modalOpenHandler, children }) => {
-
-    const modalHandler = () => {
-        modalOpenHandler();
-    }
-
+const Modal = forwardRef<HTMLDialogElement, ModalProps>(({ children }, ref) => {
     return (
-        isModalOpen ? <div className="flex top-0 left-0 justify-center items-center h-screen w-screen bg-gray-400 bg-opacity-25 z-10 fixed" onClick={modalHandler}>
+        <dialog ref={ref} className='rounded-xl'>
+            <form method='dialog' className='w-full flex justify-end pt-2 pr-2'>
+                <button ><IoMdCloseCircle fontSize={30} className='text-red-500 hover:text-red-700 hover:scale-90'/></button>
+            </form>
             {children}
-        </div> : <></>
-
-
+        </dialog>
     )
-}
-
+});
 export default Modal

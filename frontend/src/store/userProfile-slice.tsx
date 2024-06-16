@@ -44,6 +44,7 @@ const userProfileSlice = createSlice({
 export const getUserProfileData = () => {
     return async (dispatch: AppDispatch) => {
         const userProfileData = await fetchMyProfile();
+        console.log(userProfileData);
         dispatch(userProfileSlice.actions.updateUserAvatar(userProfileData));
     }
 }

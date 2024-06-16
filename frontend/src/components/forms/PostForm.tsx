@@ -10,10 +10,10 @@ import { useNavigate } from 'react-router-dom';
 
 type props = {
     myPost?: UserPersonalBEPostType;
-    modalOpenHandler:()=>void;
+    modalCloseHandler:()=>void;
 }
 
-const PostForm = ({ myPost, modalOpenHandler }: props) => {
+const PostForm = ({ myPost, modalCloseHandler }: props) => {
 
     const formMethods = useForm<UserPersonalPostType>();
 
@@ -35,7 +35,7 @@ const PostForm = ({ myPost, modalOpenHandler }: props) => {
             resetField('recipe');
             resetField('images');
             showToast({ message: 'Nom, Nom! Yummy post!', type: 'SUCCESS' });
-            modalOpenHandler();
+            modalCloseHandler();
             navigate('/');
         },
         onError: async () => {

@@ -9,10 +9,10 @@ export type UserPersonalPostType = {
 }
 
 type CreatePostProps = {
-    modalOpenHandler: ()=>void
+    modalCloseHandler: ()=>void
 }
 
-const CreatePost = ({modalOpenHandler}: CreatePostProps) => {
+const CreatePost = ({modalCloseHandler}: CreatePostProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -22,7 +22,7 @@ const CreatePost = ({modalOpenHandler}: CreatePostProps) => {
         <div className='w-full h-4/6 md:w-2/4 md:h-auto bg-white rounded-xl' onClick={handleClick}>
 
             <h3 className='text-xl font-bold p-5 border-b-2 border-gray-200'>Cook Something!</h3>
-            <PostForm modalOpenHandler={modalOpenHandler}/>
+            <PostForm modalCloseHandler={modalCloseHandler}/>
 
         </div>
     )

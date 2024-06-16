@@ -7,6 +7,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import userRoutes from './routes/user.routes';
 import authRoutes from './routes/auth.routes';
 import myPostRoutes from './routes/my-personal-posts.routes';
+import updateAvatarRoutes from './routes/user-avatar.routes';
 
 
 
@@ -48,6 +49,9 @@ app.use('/api/auth', authRoutes);
 
 //PERSONAL POST ROUTES
 app.use('/api/mypost', myPostRoutes);
+
+//UPDATE USER AVATAR
+app.use('/api/avatars', updateAvatarRoutes)
 
 
 app.listen(port, () => {
