@@ -8,10 +8,30 @@ export type UserPersonalPostType = {
     lastUpdated: Date;
 }
 
+
+export type FriendsInfoReturnType ={
+    friendId: string;
+    email: string;
+    firstname: string;
+    lastname: string;
+    username: string;
+    avatar: string;
+}
+
+export type FriendsSearchResponse = {
+    data: FriendsInfoReturnType[];
+    pagination: {
+        total: number,
+        page: number,
+        pages: number,
+    }
+}
+
+
 export type UserAvatarSignedType = {
-    _id:string;
-    userId:string;
-    avatar:string;
+    _id: string;
+    userId: string;
+    avatar: string;
 }
 
 export type UserAvatarsOptionsType = {

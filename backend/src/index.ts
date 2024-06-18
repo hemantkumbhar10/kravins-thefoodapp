@@ -8,6 +8,7 @@ import userRoutes from './routes/user.routes';
 import authRoutes from './routes/auth.routes';
 import myPostRoutes from './routes/my-personal-posts.routes';
 import updateAvatarRoutes from './routes/user-avatar.routes';
+import searchRoutes from './routes/search.routes';
 
 
 
@@ -52,6 +53,9 @@ app.use('/api/mypost', myPostRoutes);
 
 //UPDATE USER AVATAR
 app.use('/api/avatars', updateAvatarRoutes)
+
+//SEARCH ROUTES
+app.use('/api/search', searchRoutes);
 
 
 app.listen(port, () => {

@@ -14,6 +14,24 @@ export type UserProfileResponseType = {
 
 export type UserAvatarResponseType = { updatedAvatar: string }
 
+export type FriendsInfoReturnType = {
+    friendId: string;
+    email: string;
+    firstname: string;
+    lastname: string;
+    username: string;
+    avatar: string;
+}
+
+export type FriendsSearchResponse = {
+    data: FriendsInfoReturnType[];
+    pagination: {
+        total: number,
+        page: number,
+        pages: number,
+    }
+}
+
 
 export type UserPersonalBEPostType = {
     _id: string;
