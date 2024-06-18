@@ -13,7 +13,7 @@ export const UserInformation: React.FC<UserInfoPropType> = ({ _id, email, firstn
 
   return (
     <>
-      <div className='flex justify-around p-2 md:p-5 border rounded-lg border-gray-200 mb-5'>
+      <div className='flex justify-around p-2 md:p-5 border rounded-lg border-gray-200 mb-5 w-60 md:w-[30rem]'>
         <div className='w-16 flex flex-col justify-center items-center'>
           <h2 className='text-lg md:text-xl font-bold text-tomato'>50</h2>
           <h2 className='text-base md:text-lg'>Friends</h2>

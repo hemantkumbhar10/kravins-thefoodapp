@@ -66,7 +66,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className='py-3 px-5 bg-tomato'>
+    <div className='py-3 px-5 bg-tomato w-full'>
       <div className='container flex justify-between'>
         <Link to="/" className=''><img src={logo} alt="Kravins logo" aria-hidden width={40} height={40} className='md:w-12' /></Link>
         <div className='flex flex-row justify-between items-center'>

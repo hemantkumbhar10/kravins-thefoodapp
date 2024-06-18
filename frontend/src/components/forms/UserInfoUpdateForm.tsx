@@ -33,7 +33,7 @@ const UserInfoUpdateForm: React.FC<UserInfoPropType> = ({ email, firstname, last
   return (
     <form
       onSubmit={onSubmit}
-      className='m-auto flex flex-col justify-around md:justify-between items-center w-full h-full md:h-[27rem] transition-all duration-500'
+      className='flex flex-col justify-around md:justify-between items-center h-full md:h-[27rem] transition-all duration-500 w-60 md:w-[30rem] '
     >
       <div className="w-full h-2/3 px-3 flex flex-col justify-start md:justify-between">
         <Input
