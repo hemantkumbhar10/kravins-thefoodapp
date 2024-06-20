@@ -17,9 +17,11 @@ export const searchFriends = async (req: Request, res: Response) => {
         const pageSize = 5;
         const pageNumber = parseInt(req.query.page ? req.query.page.toString() : "1");
 
+        const user = await User.findById(req.userId).select('-password');
+
         //Skipper when clicked on next page
         const skip = (pageNumber - 1) * pageSize;
-        const friends = await User.find(query).skip(skip).limit(pageSize).select('-password');
+        const friends = await User.find(query).where('username').ne(user?.username).skip(skip).limit(pageSize).select('-password');
 
         //Total count display at pagination
         const total = await User.countDocuments(query);

@@ -1,6 +1,6 @@
 import express from 'express';
 import { check } from 'express-validator';
-import { me, register, updateUserData } from '../controllers/user.controller';
+import { getUsers, getUsersFriendRequests, me, register, updateUserData } from '../controllers/user.controller';
 import { verifyToken } from '../middlewares/verifytoken.middleware';
 
 const router = express.Router();
@@ -31,5 +31,10 @@ router.put(
     ],
     updateUserData
 )
+
+
+
+router.get('/get-users', verifyToken, getUsers);
+router.get('/get-friendrequests', verifyToken, getUsersFriendRequests);
 
 export default router;

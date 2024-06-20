@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 // import friendsSchema from './friends.model';
 
-type UserType = {
+export type UserType = {
     _id: string;
     email: string;
     firstname: string;

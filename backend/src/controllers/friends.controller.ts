@@ -5,7 +5,7 @@ import User from "../models/user.model";
 export const addFriend = async (req: Request, res: Response) => {
     try {
         const friendsUsername = req.body.friendsUsername;
-        
+
         const userId = req.userId;
         const user = await User.findById(userId).select(['username', 'friends']);
 
@@ -16,6 +16,10 @@ export const addFriend = async (req: Request, res: Response) => {
         }
         if (!friend) {
             return res.status(400).send({ message: 'This person does not exists!' });
+        }
+
+        if (friendsUsername === user.username) {
+            return res.status(400).send({ message: 'Cannot send friend request to yourself!' });
         }
 
         //if person is already in users friendRequest list, then remove it first from there
@@ -35,7 +39,7 @@ export const addFriend = async (req: Request, res: Response) => {
         user.friends.friendsUsernames.push(friendsUsername);
 
         //if the user is already in persons friendlist, then do not push users username in persons requestlist
-        if(!friend.friends.friendsUsernames.includes(user.username)){
+        if (!friend.friends.friendsUsernames.includes(user.username)) {
             friend.friends.friendsRequestUsernames.push(user.username);
             await friend.save();
         }

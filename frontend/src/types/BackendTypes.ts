@@ -37,6 +37,15 @@ export type FriendsSearchResponse = {
     }
 }
 
+export type ConnectedFriendsResponse = [{
+    friendId: string,
+    firstname: string,
+    lastname: string,
+    email: string,
+    username: string,
+    avatar: string,
+}]
+
 
 export type UserPersonalBEPostType = {
     _id: string;

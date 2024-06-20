@@ -22,7 +22,7 @@ const MyFriends = () => {
             </div>
 
             {/* /////////////////////////////////////////////////////////////////////////////////////// */}
-            {selectedTab === 0 && <div className='w-60'><ConnectedFriends /></div>}
+            {selectedTab === 0 && <ConnectedFriends />}
             {selectedTab === 1 && <SearchFriends />}
 
 

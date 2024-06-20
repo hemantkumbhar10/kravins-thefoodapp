@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import User from '../models/user.model';
+import User, { UserType } from '../models/user.model';
 import jwt from 'jsonwebtoken';
 import UsersAvatarSigned from '../models/user-avatars.model';
 import { getUsersAvatarData } from '../helpers/getUserAvatarData.helper';
+import mongoose from 'mongoose';
 
 export const register = async (req: Request, res: Response) => {
 
@@ -92,6 +93,91 @@ export const me = async (req: Request, res: Response) => {
     } catch (e) {
         console.log(e);
         res.status(500).send({ message: 'Something went wrong!' });
+    }
+}
+
+
+
+export const getUsers = async (req: Request, res: Response) => {
+    
+    try {
+        const userId = req.userId;
+        const user  = await User.findOne({_id:userId}).select('-password');
+        if (!user) {
+            return res.status(400).send({ message: 'User not found!' });
+        }
+        const usersFriends = user.friends.friendsUsernames;
+
+        const filter = { username: { $in: usersFriends } };
+
+        const users = await User.find(filter).select('-password');
+
+        const userIds = users.map(user => user._id);
+        const usersAvatars = await UsersAvatarSigned.find({ userId: { $in: userIds } });
+        const avatarOptions = await mongoose.connection.collection('avatars').find({}).toArray();
+
+        //Merging avatars with respect to each friend
+        const usersWithAvatars = users.map(user => {
+            const avatarObj = usersAvatars.find(avatar => avatar.userId === user._id.toString());
+            const avatarURL = avatarOptions[0][avatarObj?.avatar!];
+
+            return {
+                friendId: user._id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                username: user.username,
+                avatar: avatarURL,
+            }
+        });
+
+        return res.status(200).json(usersWithAvatars);
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send({ message: 'Something went wrong!' });
+    }
+}
+
+
+export const getUsersFriendRequests = async (req: Request, res: Response) => {
+    
+    try {
+        const userId = req.userId;
+        const user  = await User.findOne({_id:userId}).select('-password');
+        if (!user) {
+            return res.status(400).send({ message: 'User not found!' });
+        }
+        const usersFriendsRequests = user.friends.friendsRequestUsernames;
+
+        const filter = { username: { $in: usersFriendsRequests } };
+
+        const users = await User.find(filter).select('-password');
+
+        const userIds = users.map(user => user._id);
+        const usersAvatars = await UsersAvatarSigned.find({ userId: { $in: userIds } });
+        const avatarOptions = await mongoose.connection.collection('avatars').find({}).toArray();
+
+        //Merging avatars with respect to each friend
+        const usersFriendRequestsWithAvatars = users.map(user => {
+            const avatarObj = usersAvatars.find(avatar => avatar.userId === user._id.toString());
+            const avatarURL = avatarOptions[0][avatarObj?.avatar!];
+
+            return {
+                friendId: user._id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                username: user.username,
+                avatar: avatarURL,
+            }
+        });
+
+        return res.status(200).json(usersFriendRequestsWithAvatars);
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send({ message: 'Something went wrong!' });
     }
 }
 
