@@ -1,19 +1,12 @@
 import React, { useRef } from 'react'
 import Modal from '../ui/Modal';
 import { Avatars } from '../Avatars';
+import { useAppSelector } from '../../store/dispatchHooks';
 
 
-interface MyProfileInfoCardPropType {
-    user_avatar: string;
-    firstname: string;
-    lastname: string;
-    username: string;
-    avatarOptions: [{
-        [key: string]: string;
-    }]
-}
+const MyProfileInfoCard: React.FC = () => {
 
-const MyProfileInfoCard: React.FC<MyProfileInfoCardPropType> = ({user_avatar, firstname, lastname, username, avatarOptions }) => {
+    const {username, firstname, lastname, user_avatar, avatarOptions} = useAppSelector(state => state.userprofile);
 
     const dialog = useRef<HTMLDialogElement>(null);
 

@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
-import { FriendsSearchResponse } from '../../types/BackendTypes';
+import { FriendsSearchResponse } from '../../../types/BackendTypes';
 import SearchFriendResults from './SearchFriendResults';
 import FriendsSearchBar, { FriendsSearchBarHandlePropType } from './FriendsSearchBar';
-import Pagination from '../ui/Pagination';
+import Pagination from '../../ui/Pagination';
 
 const SearchFriends = () => {
     const [peoplesData, setPeoplesData] = useState<FriendsSearchResponse>();

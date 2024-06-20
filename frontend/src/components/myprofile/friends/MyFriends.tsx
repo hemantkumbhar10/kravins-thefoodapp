@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import SearchFriends from './SearchFriends';
+import ConnectedFriends from './ConnectedFriends';
 
 
 const MyFriends = () => {
@@ -21,7 +22,7 @@ const MyFriends = () => {
             </div>
 
             {/* /////////////////////////////////////////////////////////////////////////////////////// */}
-            {selectedTab === 0 && <div className='w-60'></div>}
+            {selectedTab === 0 && <div className='w-60'><ConnectedFriends /></div>}
             {selectedTab === 1 && <SearchFriends />}
 
 

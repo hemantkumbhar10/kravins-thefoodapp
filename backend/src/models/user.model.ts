@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+// import friendsSchema from './friends.model';
 
 type UserType = {
     _id: string;
@@ -8,6 +9,11 @@ type UserType = {
     lastname: string;
     username: string;
     password: string;
+    friends: {
+        friendsRequestUsernames: string[];
+        friendsUsernames: string[];
+    };
+
 }
 
 
@@ -33,6 +39,16 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
+    },
+    friends: {
+        friendsRequestUsernames: {
+            type: [String],
+            default: []
+        },
+        friendsUsernames: {
+            type: [String],
+            default: []
+        }
     }
 });
 

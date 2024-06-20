@@ -5,11 +5,16 @@ export type UserProfileResponseType = {
         username: string;
         firstname: string;
         lastname: string;
+        friends: {
+            friendsRequestUsernames: string[];
+            friendsUsernames: string[];
+        };
     };
     avatar: string;
     avatarOptions: [{
         [key: string]: string;
     }];
+
 }
 
 export type UserAvatarResponseType = { updatedAvatar: string }

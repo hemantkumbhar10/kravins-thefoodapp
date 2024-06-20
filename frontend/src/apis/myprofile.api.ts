@@ -16,8 +16,9 @@ export const fetchMyProfile = async (): Promise<UserProfileResponseType> => {
     if (!response.ok) {
         throw new Error('Could not fetch user profile!');
     }
+    const resbody = await response.json()
 
-    return response.json();
+    return resbody;
 }
 
 export const updateMyProfile = async (formData: UserInfoPropType): Promise<UserProfileResponseType> => {
@@ -48,9 +49,11 @@ export const updateMyAvatar = async (avatar: UpdateAvatarType): Promise<UserAvat
         body: JSON.stringify(avatar)
     });
 
+    const responseBody = await response.json();
+
     if (!response.ok) {
         throw new Error('Could not update avatar!');
     }
 
-    return response.json();
+    return responseBody;
 }

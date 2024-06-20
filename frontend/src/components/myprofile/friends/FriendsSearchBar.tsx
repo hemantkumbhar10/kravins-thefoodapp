@@ -1,8 +1,8 @@
 import { FormEvent, useState, useImperativeHandle, forwardRef } from 'react'
-import { FriendsSearchResponse } from '../../types/BackendTypes';
+import { FriendsSearchResponse } from '../../../types/BackendTypes';
 import { useQueryClient } from 'react-query';
 import { TbUserSearch } from 'react-icons/tb';
-import * as searchApiClient from '../../apis/search.api';
+import * as searchApiClient from '../../../apis/search.api';
 
 type FriendsSearchBarPropType = {
     page: number;

@@ -13,6 +13,10 @@ export interface UserProfileType {
     avatarOptions: [{
         [key: string]: string;
     }];
+    friends: {
+        friendsRequestUsernames: string[];
+        friendsUsernames: string[];
+    };
 }
 
 const userProfileSlice = createSlice({
@@ -25,9 +29,13 @@ const userProfileSlice = createSlice({
         lastname: '',
         user_avatar: '',
         avatarOptions: [{}],
+        friends: {
+            friendsRequestUsernames: [],
+            friendsUsernames: []
+        }
     } as UserProfileType,
     reducers: {
-        updateUserAvatar(state, action: PayloadAction<UserProfileResponseType>) {
+        updateUser(state, action: PayloadAction<UserProfileResponseType>) {
             const userProfileData = action.payload;
             state._id = userProfileData.user._id; //Can do this cause RTK uses Immer library to look over data change
             state.email = userProfileData.user.email;
@@ -36,6 +44,8 @@ const userProfileSlice = createSlice({
             state.username = userProfileData.user.username;
             state.user_avatar = userProfileData.avatar;
             state.avatarOptions = userProfileData.avatarOptions;
+            state.friends.friendsRequestUsernames = userProfileData.user.friends.friendsRequestUsernames;
+            state.friends.friendsUsernames = userProfileData.user.friends.friendsUsernames;
         }
     }
 });
@@ -44,8 +54,7 @@ const userProfileSlice = createSlice({
 export const getUserProfileData = () => {
     return async (dispatch: AppDispatch) => {
         const userProfileData = await fetchMyProfile();
-        console.log(userProfileData);
-        dispatch(userProfileSlice.actions.updateUserAvatar(userProfileData));
+        dispatch(userProfileSlice.actions.updateUser(userProfileData));
     }
 }
 

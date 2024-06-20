@@ -16,7 +16,8 @@ export const searchFriends = async (searchData: SearchFriendsParams): Promise<Fr
     queryParams.append("page", searchData.page.toString())
 
     const response = await fetch(`${URL}/api/search/searchFriends?${queryParams}`, {
-        method: 'GET'
+        method: 'GET',
+        credentials: 'include',
     });
 
     if (!response.ok) {

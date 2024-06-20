@@ -1,24 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Input from '../ui/Input'
 import { UserInfoPropType } from '../UserInformation'
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import * as updateUserInfoClient from '../../apis/myprofile.api';
-import { useAppDispatch } from '../../store/dispatchHooks';
-import userProfileSlice from '../../store/userProfile-slice';
+import { useAppDispatch, useAppSelector } from '../../store/dispatchHooks';
+import { getUserProfileData } from '../../store/userProfile-slice';
 import { useAppContext } from '../../contexts/useAppContext';
 
 
-const UserInfoUpdateForm: React.FC<UserInfoPropType> = ({ email, firstname, lastname, username }) => {
+const UserInfoUpdateForm: React.FC = () => {
 
-  const { register, handleSubmit, formState: { errors } } = useForm<UserInfoPropType>({ defaultValues: { email, username, lastname, firstname } });
+  const { email, username, firstname, lastname } = useAppSelector(state => state.userprofile);
+
+  const { register,reset, handleSubmit, formState: { errors } } = useForm<UserInfoPropType>({ defaultValues: { email, username, firstname, lastname }  });
+
+  useEffect(()=>{
+    if(email){
+      reset({ email, username, firstname, lastname })
+    }
+  },[reset,email, username, firstname, lastname])
+
   const { showToast } = useAppContext();
 
   const dispatch = useAppDispatch();
 
   const mutation = useMutation(updateUserInfoClient.updateMyProfile, {
-    onSuccess: (data) => {
-      dispatch(userProfileSlice.actions.updateUserAvatar(data));
+    onSuccess: () => {
+      dispatch(getUserProfileData());
     },
     onError: (error: Error) => {
       showToast({ message: error.message, type: 'ERROR' });
@@ -31,7 +40,8 @@ const UserInfoUpdateForm: React.FC<UserInfoPropType> = ({ email, firstname, last
 
 
   return (
-    <form
+    <>{
+      <form
       onSubmit={onSubmit}
       className='flex flex-col justify-around md:justify-between items-center h-full md:h-[27rem] transition-all duration-500 w-60 md:w-[30rem] '
     >
@@ -72,13 +82,14 @@ const UserInfoUpdateForm: React.FC<UserInfoPropType> = ({ email, firstname, last
 
       </div>
       <button
-        disabled={mutation.isLoading}
+        // disabled={mutation.isLoading}
         type='submit'
         className='mt-4 text-md bg-tomato text-white p-2 font-bold hover:bg-tomato hover:opacity-90 rounded-3xl md:rounded-lg px-8 w-3/4 md:w-full'
       >
         {mutation.isLoading ? 'Updating' : 'Update'}
       </button>
     </form>
+    }</>
   )
 }
 
