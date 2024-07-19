@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 
 import { getUserProfileData } from './store/userProfile-slice';
 import { useAppDispatch } from './store/dispatchHooks'
+import CreatePost from './components/CreatePost'
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
         <Route path='/kravins' element={<Layout><p>Kravins Page</p></Layout>} />
         {
           isLoggedIn && <>
-            {/* <Route path='/add-mypost' element={<Layout><CreatePost /></Layout>} />  DELETE THIS LATER*/} 
+            <Route path='/create-post' element={<Layout><CreatePost /></Layout>} />
             <Route path='/myProfile' element={<Layout><MyProfile /></Layout>} />
           </>
         }

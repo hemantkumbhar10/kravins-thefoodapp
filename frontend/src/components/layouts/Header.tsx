@@ -10,8 +10,6 @@ import { IoIosNotifications } from "react-icons/io";
 import { useAppContext } from '../../contexts/useAppContext';
 import { useMutation, useQueryClient } from 'react-query';
 import * as userAuthApiClient from '../../apis/auth.api';
-import Modal from '../ui/Modal';
-import CreatePost from '../CreatePost';
 import { useAppSelector } from '../../store/dispatchHooks';
 
 
@@ -22,8 +20,7 @@ const profileDropdownOptions = [
 const Header = () => {
   const { isLoggedIn, showToast } = useAppContext();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const user_avatar = useAppSelector(state=> state.userprofile.user_avatar);
-  const dialog = useRef<HTMLDialogElement>(null);
+  const user_avatar = useAppSelector(state => state.userprofile.user_avatar);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -44,13 +41,6 @@ const Header = () => {
     mutation.mutate();
   }
 
-  const modalOpenHandler = () => {
-    dialog.current?.showModal();
-  }
-
-  const modalCloseHandler = () => {
-    dialog.current?.close();
-  }
 
   const handleClickOutside = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -66,18 +56,18 @@ const Header = () => {
   }, []);
 
   return (
-    <div className='py-3 px-5 bg-tomato w-full'>
+    <div className='py-3 fixed z-50 px-5 bg-tomato w-full'>
       <div className='container flex justify-between'>
         <Link to="/" className=''><img src={logo} alt="Kravins logo" aria-hidden width={40} height={40} className='md:w-12' /></Link>
         <div className='flex flex-row justify-between items-center'>
           {isLoggedIn &&
             <div className="fixed md:relative w-full md:w-auto py-1 md:py-0 left-0 bottom-0 bg-tomato md:bg-transparent flex flex-row items-start md:items-center justify-evenly md:justify-start md:ml-10">
-              <div onClick={modalOpenHandler} className="flex flex-col items-center justify-between md:ml-3 hover:scale-105">
+              <Link to='/create-post' className="flex flex-col items-center justify-between md:ml-3 hover:scale-105">
                 <span className='block m-auto' aria-hidden>
                   <IoCreate className='text-white text-2xl' />
                 </span>
                 <span className='text-sm text-white m-auto'>Create Post</span>
-              </div>
+              </Link>
               <Link to='/' className="flex flex-col items-center justify-between md:ml-3 hover:scale-105">
                 <span className='block m-auto' aria-hidden>
                   <PiBowlFoodFill className='text-white text-2xl' />
@@ -123,9 +113,6 @@ const Header = () => {
           }
         </div>
       </div>
-      <Modal ref={dialog}>
-        <CreatePost modalCloseHandler={modalCloseHandler} />
-      </Modal>
     </div>
   )
 }

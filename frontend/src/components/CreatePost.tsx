@@ -8,21 +8,17 @@ export type UserPersonalPostType = {
     images: string[];
 }
 
-type CreatePostProps = {
-    modalCloseHandler: ()=>void
-}
 
-const CreatePost = ({modalCloseHandler}: CreatePostProps) => {
 
-    const handleClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-    }
+const CreatePost = () => {
+
+
     
     return (
-        <div className='w-full h-4/6 md:w-2/4 md:h-auto bg-white rounded-xl' onClick={handleClick}>
+        <div className='w-full sm:w-2/3 m-auto h-auto flex flex-col justify-around items-start' >
 
-            <h3 className='text-xl font-bold p-5 border-b-2 border-gray-200'>Cook Something!</h3>
-            <PostForm modalCloseHandler={modalCloseHandler}/>
+            <h3 className='w-full text-2xl font-bold p-5 border-b-2 border-gray-200'>Cook Something!</h3>
+            <PostForm/>
 
         </div>
     )

@@ -10,10 +10,9 @@ import { useNavigate } from 'react-router-dom';
 
 type props = {
     myPost?: UserPersonalBEPostType;
-    modalCloseHandler:()=>void;
 }
 
-const PostForm = ({ myPost, modalCloseHandler }: props) => {
+const PostForm = ({ myPost }: props) => {
 
     const formMethods = useForm<UserPersonalPostType>();
 
@@ -35,7 +34,6 @@ const PostForm = ({ myPost, modalCloseHandler }: props) => {
             resetField('recipe');
             resetField('images');
             showToast({ message: 'Nom, Nom! Yummy post!', type: 'SUCCESS' });
-            modalCloseHandler();
             navigate('/');
         },
         onError: async () => {
@@ -79,7 +77,7 @@ const PostForm = ({ myPost, modalCloseHandler }: props) => {
 
     return (
         <FormProvider {...formMethods}>
-            <form className='p-3 mx-3 border-b-2 rounded-md' onSubmit={createMyNewPostSubmitHandler}>
+            <form className='w-full p-3 mx-3' onSubmit={createMyNewPostSubmitHandler}>
                 <PostDetailsInputs />
                 <span className="flex justify-end mt-3">
                     <button disabled={isLoading} type='submit' className='text-sm bg-tomato text-white p-2 font-bold hover:bg-orange-600 rounded-md px-8'>

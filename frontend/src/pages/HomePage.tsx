@@ -1,12 +1,13 @@
-
+import React from 'react'
+import FeedPosts from '../components/posts/FeedPosts.tsx';
 
 const HomePage = () => {
+  return (
+    <div className='w-full h-full flex justify-center items-start' >
 
-    return (<>
-        <div className="">
-            <h1>Homepage</h1>
-        </div>
-    </>)
+      <FeedPosts />
+    </div>
+  )
 }
 
 export default HomePage;

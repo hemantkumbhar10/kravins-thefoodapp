@@ -10,7 +10,10 @@ const Layout = ({ children }: Props) => {
     return (
         <div className='min-h-screen font-sans  flex flex-col items-center'>
             <Header />
-            <div className='container'>
+                /*
+            * TODO: Add responsive margin i guess
+            * */
+            <div className='container mt-16'>
                 {children}
             </div>
         </div>
