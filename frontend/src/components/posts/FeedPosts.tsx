@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useMemo } from 'react';
+import React, { useRef, useCallback } from 'react';
 import PostCard from './PostCard.tsx';
 import { useInfiniteQuery } from 'react-query';
 import * as feedPostClientApi from '../../apis/feed.api.ts';

@@ -3,23 +3,21 @@ import { FormProvider, useForm } from 'react-hook-form';
 import PostDetailsInputs from '../ui/PostDetailsInputs'
 import { UserPersonalBEPostType } from '../../types/BackendTypes';
 import { UserPersonalPostType } from '../CreatePost';
-import { useMutation } from 'react-query';
-import * as myPersonalPostApis from '../../apis/myposts.api';
-import { useAppContext } from '../../contexts/useAppContext';
-import { useNavigate } from 'react-router-dom';
+
+
 
 type props = {
     myPost?: UserPersonalBEPostType;
+    postFormHandler: (postFormData: FormData) => void;
+    isLoading: boolean
 }
 
-const PostForm = ({ myPost }: props) => {
+const PostForm = ({ myPost, postFormHandler, isLoading }: props) => {
 
     const formMethods = useForm<UserPersonalPostType>();
 
-    const { handleSubmit, reset, resetField } = formMethods;
+    const { handleSubmit, reset } = formMethods;
 
-    const { showToast } = useAppContext();
-    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -28,25 +26,8 @@ const PostForm = ({ myPost }: props) => {
 
 
 
-    const { mutate, isLoading } = useMutation(myPersonalPostApis.createMyNewPost, {
-        onSuccess: async () => {
-            resetField('title');
-            resetField('recipe');
-            resetField('images');
-            showToast({ message: 'Nom, Nom! Yummy post!', type: 'SUCCESS' });
-            navigate('/');
-        },
-        onError: async () => {
-            showToast({ message: 'Something went wrong!', type: 'ERROR' });
-        },
-    })
 
-    const handlePostForm = (mypostFormData: FormData) => {
-        mutate(mypostFormData);
-        // console.log(mypostFormData);
-    }
-
-    const createMyNewPostSubmitHandler = handleSubmit((formDataJson: UserPersonalPostType) => {
+    const postSubmitHandler = handleSubmit((formDataJson: UserPersonalPostType) => {
         const formData = new FormData();
 
         if (myPost) {
@@ -72,12 +53,12 @@ const PostForm = ({ myPost }: props) => {
         // console.log(formDataJson)
         // console.log(formDataJson.name)
 
-        handlePostForm(formData);
+        postFormHandler(formData);
     });
 
     return (
         <FormProvider {...formMethods}>
-            <form className='w-full p-3 mx-3' onSubmit={createMyNewPostSubmitHandler}>
+            <form className='w-full p-3 mx-3' onSubmit={postSubmitHandler}>
                 <PostDetailsInputs />
                 <span className="flex justify-end mt-3">
                     <button disabled={isLoading} type='submit' className='text-sm bg-tomato text-white p-2 font-bold hover:bg-orange-600 rounded-md px-8'>

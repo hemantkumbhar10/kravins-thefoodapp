@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import { getUserProfileData } from './store/userProfile-slice';
 import { useAppDispatch } from './store/dispatchHooks'
 import CreatePost from './components/CreatePost'
+import UpdatePersonalPost from './pages/UpdatePersonalPost'
 
 function App() {
 
@@ -17,11 +18,11 @@ function App() {
   const dispatch = useAppDispatch();
 
 
-  useEffect(()=>{
-    if(isLoggedIn){
+  useEffect(() => {
+    if (isLoggedIn) {
       dispatch(getUserProfileData());
     }
-  },[isLoggedIn, dispatch])
+  }, [isLoggedIn, dispatch])
 
   return (
     <>
@@ -33,6 +34,7 @@ function App() {
           isLoggedIn && <>
             <Route path='/create-post' element={<Layout><CreatePost /></Layout>} />
             <Route path='/myProfile' element={<Layout><MyProfile /></Layout>} />
+            <Route path='/edit/:id' element={<Layout><UpdatePersonalPost /></Layout>} />
           </>
         }
 

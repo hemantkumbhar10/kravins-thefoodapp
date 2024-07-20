@@ -24,8 +24,8 @@ const ImageUploader = () => {
               {
                 existingImages.map((url, index) => (
                   <div className="relative group" key={url + "_" + index}>
-                    <img src={url} alt={`Post ${index}`} className='min-h-full object cover' />
-                    <button onClick={(e) => ImageDeleteHandler(e, url)} className='bg-tomato text-lg font-normal flex items-center rounded-md text-white px-3 hover:bg-red-500'></button>
+                    <img src={url} alt={`Post ${index}`} className='min-h-full object-cover' />
+                    <button onClick={(e) => ImageDeleteHandler(e, url)} className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 text-white">Delete</button>
                   </div>
                 ))
               }
@@ -35,7 +35,7 @@ const ImageUploader = () => {
 
         <input
           type="file"
-          multiple 
+          multiple
           accept='image/*'
           className='w-full p-2.5 text-gray-700 font-normal'
           {...register('postImages', {
@@ -54,8 +54,8 @@ const ImageUploader = () => {
           })}
         />
       </div>
-      {errors.images && (
-        <span className='text-red-500 text-xs font-bold pl-1'>{errors.images.message}</span>
+      {errors.postImages && (
+        <span className='text-red-500 text-xs font-bold pl-1'>{errors.postImages.message}</span>
       )}
     </div>
   )
