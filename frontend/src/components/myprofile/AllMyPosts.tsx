@@ -9,8 +9,14 @@ const AllMyPosts = () => {
     const { data: myPosts } = useQuery('allMyPosts', personalPostsApis.getAllMyPost);
 
     console.log(myPosts);
-    const { username, user_avatar } = useAppSelector(state => state.userprofile);
+    const { email, firstname, lastname, username, _id, friends, user_avatar } = useAppSelector(state => state.userprofile);
 
+
+
+
+    const userData = {
+        email, username, firstname, lastname, _id, friends
+    }
 
 
 
@@ -21,7 +27,7 @@ const AllMyPosts = () => {
                     myPosts?.map((post) => {
                         const postData = {
                             avatarUrl: user_avatar,
-                            user: { username },
+                            user: userData,
                             post
                         }
                         return (
