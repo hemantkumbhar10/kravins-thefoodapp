@@ -21,7 +21,7 @@ export type UserProfileResponseType = {
   avatarOptions: [{
     [key: string]: string;
   }]
-} | { username: string }
+}
 
 
 export type UserAvatarResponseType = { updatedAvatar: string };

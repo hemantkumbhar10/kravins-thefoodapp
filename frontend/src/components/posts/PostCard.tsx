@@ -10,7 +10,7 @@ import Modal from '../ui/Modal';
 import { useAppContext } from '../../contexts/useAppContext';
 import { useNavigate } from 'react-router-dom';
 type PostDataType = {
-  post: UserPostsData | { user: { username: string }, avatarUrl: string, post: UserPostsData['post'] }
+  post: UserPostsData
 }
 
 

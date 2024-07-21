@@ -7,7 +7,7 @@ interface GalleryProps {
   postImgs: string[];
   dropDownHandler: () => void;
   isDropped: boolean;
-  user: UserPostsData['user'];
+  user: UserPostsData['user'] | { username: string };
   avatarUrl: string;
   post_title: string;
 }
