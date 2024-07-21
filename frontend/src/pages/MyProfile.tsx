@@ -1,16 +1,18 @@
-import {useState } from 'react'
+import { useState } from 'react'
 import { UserInformation } from '../components/UserInformation';
 import { Tab } from '../constants/MyProfileTabs';
 import ProfileTabLinks from '../components/myprofile/ProfileTabLinks';
 import MyProfileInfoCard from '../components/myprofile/MyProfileInfoCard';
 import MyFriends from '../components/myprofile/friends/MyFriends';
+import AllMyPosts from '../components/myprofile/AllMyPosts';
+
 
 const MyProfile = () => {
 
   const [selectedTab, setSelectedTab] = useState(Tab.INFO);
 
 
- 
+
 
   const tabsClickHandler = (tabName: number) => {
     setSelectedTab(tabName);
@@ -27,6 +29,7 @@ const MyProfile = () => {
           <UserInformation />
         }
         {selectedTab === Tab.FRIENDS && <MyFriends />}
+        {selectedTab === Tab.POSTS && <AllMyPosts />}
       </div>
 
     </div>

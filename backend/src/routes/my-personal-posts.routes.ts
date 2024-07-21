@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteMyPost, getMyPersonalPost, myPersonalPost, updateMyPersonalPost } from '../controllers/my-personal-posts.controller';
+import { deleteMyPost, getAllMyPosts, getMyPersonalPost, myPersonalPost, updateMyPersonalPost } from '../controllers/my-personal-posts.controller';
 import { uploadImage } from '../helpers/imageupload.helper';
 import { body, check } from 'express-validator';
 import { verifyToken } from '../middlewares/verifytoken.middleware';
@@ -10,6 +10,8 @@ const router = express.Router();
 
 
 router.get('/:id', [check('postId', 'PostId is required').isString()], verifyToken, getMyPersonalPost);
+
+router.get('/all/all-posts', verifyToken, getAllMyPosts);
 
 router.post('/',
     [

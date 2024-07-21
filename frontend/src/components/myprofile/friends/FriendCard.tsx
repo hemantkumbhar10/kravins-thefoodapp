@@ -10,21 +10,21 @@ import { FaCheckCircle } from 'react-icons/fa';
 
 
 interface FriendCardPropType {
-    avatar: string; 
-    firstname: string; 
-    lastname: string; 
+    avatar: string;
+    firstname: string;
+    lastname: string;
     username: string
 }
 
 
-const FriendCard:React.FC<FriendCardPropType> = ({ avatar, firstname, lastname, username }) => {
+const FriendCard: React.FC<FriendCardPropType> = ({ avatar, firstname, lastname, username }) => {
 
     const dispatch = useAppDispatch();
 
     const { showToast } = useAppContext();
 
     const addFriendMutation = useMutation(friendsApiClient.addFriend, {
-        onSuccess: (data, friendsUsername) => {
+        onSuccess: (_, friendsUsername) => {
             dispatch(getUserProfileData());
             showToast({ message: `@${friendsUsername} is your friend now!`, type: 'SUCCESS' });
         },

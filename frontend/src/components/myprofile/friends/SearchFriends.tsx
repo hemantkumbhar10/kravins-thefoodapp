@@ -1,16 +1,16 @@
 import { useRef, useState } from 'react'
-import { FriendsSearchResponse } from '../../../types/BackendTypes';
+import { FriendsSearchReponseType } from '../../../types/BackendTypes';
 import SearchFriendResults from './SearchFriendResults';
 import FriendsSearchBar, { FriendsSearchBarHandlePropType } from './FriendsSearchBar';
 import Pagination from '../../ui/Pagination';
 
 const SearchFriends = () => {
-    const [peoplesData, setPeoplesData] = useState<FriendsSearchResponse>();
+    const [peoplesData, setPeoplesData] = useState<FriendsSearchReponseType>();
     const [page, setPage] = useState<number>(1);
 
     const paginationRef = useRef<FriendsSearchBarHandlePropType>(null);
 
-    const getSearchedResult = (data: FriendsSearchResponse) => {
+    const getSearchedResult = (data: FriendsSearchReponseType) => {
         setPeoplesData(data);
     }
 

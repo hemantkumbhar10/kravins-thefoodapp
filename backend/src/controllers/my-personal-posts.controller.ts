@@ -22,6 +22,23 @@ export const getMyPersonalPost = async (req: Request, res: Response) => {
 }
 
 
+export const getAllMyPosts = async (req: Request, res: Response) => {
+    try {
+        const allMyPosts = await UserPersonalPost.find({ userId: req.userId });
+
+        if (!allMyPosts) {
+            return res.status(404).send({ message: "Posts not found!" });
+        }
+
+        return res.status(200).json(allMyPosts);
+    }
+    catch (e) {
+        console.log("Error getting all posts!", e);
+        return res.status(500).send({ message: "Soemthing went wrong!" });
+    }
+}
+
+
 export const myPersonalPost = async (req: Request, res: Response) => {
     try {
         const postImages = req.files as Express.Multer.File[];

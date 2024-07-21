@@ -1,4 +1,4 @@
-import { FriendsSearchResponse } from "../types/BackendTypes";
+import { FriendsSearchReponseType } from "../types/BackendTypes";
 
 const URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
@@ -8,7 +8,7 @@ export type SearchFriendsParams = {
     page: number;
 }
 
-export const searchFriends = async (searchData: SearchFriendsParams): Promise<FriendsSearchResponse> => {
+export const searchFriends = async (searchData: SearchFriendsParams): Promise<FriendsSearchReponseType> => {
 
     const queryParams = new URLSearchParams();
 

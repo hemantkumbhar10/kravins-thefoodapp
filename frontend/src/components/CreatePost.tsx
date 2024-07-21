@@ -1,4 +1,3 @@
-import React from 'react'
 import PostForm from './forms/PostForm';
 
 import { useAppContext } from '../contexts/useAppContext';

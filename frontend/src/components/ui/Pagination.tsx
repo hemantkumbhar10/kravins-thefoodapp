@@ -1,5 +1,5 @@
 import React from 'react'
-import { FriendsSearchBarHandlePropType } from '../myprofile/FriendsSearchBar';
+import { FriendsSearchBarHandlePropType } from '../myprofile/friends/FriendsSearchBar';
 
 export type PaginationPropType = {
     page: number;

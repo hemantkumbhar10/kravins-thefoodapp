@@ -1,4 +1,3 @@
-import React from 'react'
 import FeedPosts from '../components/posts/FeedPosts.tsx';
 
 const HomePage = () => {

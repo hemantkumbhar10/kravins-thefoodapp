@@ -10,11 +10,10 @@ import Modal from '../ui/Modal';
 import { useAppContext } from '../../contexts/useAppContext';
 import { useNavigate } from 'react-router-dom';
 type PostDataType = {
-  post: UserPostsData
+  post: UserPostsData | { user: { username: string }, avatarUrl: string, post: UserPostsData['post'] }
 }
 
 
-//TODO:  Update post functionality
 
 
 const PostCard = React.forwardRef<HTMLDivElement, PostDataType>((props, ref) => {

@@ -12,10 +12,10 @@ export const dateFormatter = (date: Date) => {
 	const minutesAgo = Math.floor(timeDifference / (1000 * 60));
 	const secondsAgo = Math.floor(timeDifference / 1000);
 
-	const dateOptions = {
-		year: "numeric",
-		month: "short",
-		day: "numeric"
+	const dateOptions: Intl.DateTimeFormatOptions = {
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric'
 	};
 
 
