@@ -40,7 +40,7 @@ const Carousel: React.FC<CarouselPropTypes> = ({ postImgs, isDropped }) => {
   return (
     <>
       <div
-        className={`w-full absolute flex flex-row ${isDropped && "overflow-x-scroll snap-x snap-mandatory"}`}
+        className={`w-full absolute select-none flex flex-row ${isDropped && "overflow-x-scroll snap-x snap-mandatory"}`}
       >
         {postImgs.map((url, i) => {
           return (

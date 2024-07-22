@@ -40,14 +40,14 @@ const DropDownMenu = ({ options, button }: Dropdown) => {
     <>
 
 
-      <div className='relative' ref={dropdownRef}>
-        <IoEllipsisHorizontal onClick={dropDownHandler} className='cursor-pointer' />
+      <div className='relative select-none' ref={dropdownRef}>
+        <IoEllipsisHorizontal onClick={dropDownHandler} className='cursor-pointer' aria-label='Options' />
         {isDropDownOpen &&
 
-          <ul className='absolute top-5 right-0 bg-white p-2 px-3 pr-5 rounded-md'>
+          <ul className='absolute top-5 right-0 bg-white rounded-md'>
             {options.map((option, index) => {
               return (
-                <li key={option.label + index} className='w-full'><Link to={`/${option.value}`} className='text-black text-sm'>{option.label}</Link></li>
+                <li key={option.label + index} className='w-full border-b border-b-gray-300 p-1 px-2 pr-8'><Link to={`/${option.value}`} className='text-black text-sm' aria-label={option.label}>{option.label}</Link></li>
               )
             })}
             {button && button}

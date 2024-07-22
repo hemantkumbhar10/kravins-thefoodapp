@@ -62,8 +62,8 @@ const PostOverlay: React.FC<PostOverlayPropsTypes> = ({
         className="absolute bottom-1 left-4 w-2/4 cursor-pointer"
         onClick={dropDownHandler}
       >
-        <p className={`text-white ${isDropped && "text-orange-700"}`}>
-          See {!isDropped ? "More..." : "less"}
+        <p className={`text-white text-sm ${isDropped && "text-orange-700"}`}>
+          See {!isDropped ? "more..." : "less"}
         </p>
       </div>
     </>

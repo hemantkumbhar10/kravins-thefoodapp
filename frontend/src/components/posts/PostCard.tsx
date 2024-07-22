@@ -63,13 +63,13 @@ const PostCard = React.forwardRef<HTMLDivElement, PostDataType>((props, ref) => 
     modalCloseHandler();
   }
 
-  const DeletePostButton = <button className="text-red-700 text-sm" onClick={modalOpenHandler}>Delete</button>
+  const DeletePostButton = <button type="button" className="text-red-700 text-sm p-1 px-2" aria-label="Delete Post" onClick={modalOpenHandler}>Delete</button>
 
 
 
   return (
     <>
-      <div ref={ref} className="w-full flex flex-col justify-center items-center py-3">
+      <div ref={ref} className="w-full flex flex-col justify-center items-center py-3 transition-all ease-in-out">
         <Gallery
           user={user}
           postImgs={post.images}
@@ -79,12 +79,12 @@ const PostCard = React.forwardRef<HTMLDivElement, PostDataType>((props, ref) => 
           post_title={post.title}
         />
         <div
-          className={`w-full ${isDropped ? "h-96 p-3 pb-4 " : "h-0"} bg-gray-100 transition-[height, padding] duration-300 ease overflow-y-scroll`}
+          className={`w-full ${isDropped ? "h-96 p-3 pb-4 " : "h-0"} bg-gray-100 md:rounded-xl transition-[height, padding] duration-300 ease overflow-y-scroll`}
         >
           <div className="flex flex-row w-full justify-between">
             <div>
-              <a className="italic text-base font-semibold">@{user.username}</a>
-              <p>{statusString}</p>
+              <a className="italic text-base font-semibold select-none">@{user.username}</a>
+              <p className="select-none">{statusString}</p>
             </div>
             {username === user.username &&
               <DropDownMenu options={[{ value: `edit/${post._id}`, label: "Edit" },]} button={DeletePostButton} />}
@@ -96,9 +96,9 @@ const PostCard = React.forwardRef<HTMLDivElement, PostDataType>((props, ref) => 
         </div>
       </div>
       <Modal ref={dialog}>
-        <div className="w-60 h-32 flex flex-col justify-start items-center px-8">
+        <div className="w-60 h-32 flex flex-col justify-start items-center px-8 select-none">
           <h5 className="text-center pb-4">Are you sure you want to delete this post?</h5>
-          <button className="text-lg font-bold rounded-full  p-1 px-4 text-white bg-red-500" onClick={handleDeletePostForm}>Delete</button>
+          <button className="text-lg font-bold rounded-full  p-1 px-4 text-white bg-red-500" aria-label="Confirm to delete post" onClick={handleDeletePostForm}>Delete</button>
         </div>
       </Modal>
     </>

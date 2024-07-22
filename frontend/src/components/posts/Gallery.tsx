@@ -22,7 +22,7 @@ const Gallery: React.FC<GalleryProps> = ({
 }) => {
 
   return (
-    <div className="w-full relative h-72 top-0 left-0 overflow-hidden">
+    <div className="w-full relative h-72 top-0 left-0 overflow-hidden select-none md:rounded-xl">
       <div className="w-full relative flex h-full top-0 left-0 items-center">
         <Carousel postImgs={postImgs} isDropped={isDropped} />
       </div>
