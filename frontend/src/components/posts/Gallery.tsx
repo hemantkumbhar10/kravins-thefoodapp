@@ -5,6 +5,8 @@ import { UserPostsData } from "../../types/BackendTypes";
 
 interface GalleryProps {
   postImgs: string[];
+  isOpenComments: boolean;
+  openCommentsHandler: () => void;
   dropDownHandler: () => void;
   isDropped: boolean;
   user: UserPostsData['user'];
@@ -14,6 +16,8 @@ interface GalleryProps {
 
 const Gallery: React.FC<GalleryProps> = ({
   postImgs,
+  openCommentsHandler,
+  isOpenComments,
   dropDownHandler,
   isDropped,
   user,
@@ -29,6 +33,8 @@ const Gallery: React.FC<GalleryProps> = ({
       <PostOverlay
         isDropped={isDropped}
         user_avatar={avatarUrl}
+        isOpenComments={isOpenComments}
+        openCommentsHandler={openCommentsHandler}
         username={user.username}
         dropDownHandler={dropDownHandler}
         post_title={post_title}

@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import UserPersonalPost from '../models/user-personal-post.model';
 import { uploadImages } from '../middlewares/cloudinary.middleware';
 import { UserPersonalPostType } from '../helpers/types';
-
+import { getAllComments } from './comments.controller';
+import { IComment } from '../models/comments.model';
 
 export const getMyPersonalPost = async (req: Request, res: Response) => {
     try {
@@ -14,7 +15,14 @@ export const getMyPersonalPost = async (req: Request, res: Response) => {
             return res.status(404).send({ message: "Post not found!" });
         }
 
-        return res.status(200).json(post);
+        const comments = await getAllComments(postId);
+
+        const data = {
+            post,
+            comments
+        }
+
+        return res.status(200).json(data);
     } catch (e) {
         console.log("Error while fetching post", e);
         return res.status(500).send({ message: "Something went wrong!" });
@@ -22,15 +30,36 @@ export const getMyPersonalPost = async (req: Request, res: Response) => {
 }
 
 
+export interface GetPostsWithComments extends UserPersonalPostType {
+    comments: IComment[]
+}
+
 export const getAllMyPosts = async (req: Request, res: Response) => {
     try {
-        const allMyPosts = await UserPersonalPost.find({ userId: req.userId });
+        const allMyPosts: UserPersonalPostType[] = await UserPersonalPost.find({ userId: req.userId }).lean();
 
         if (!allMyPosts) {
             return res.status(404).send({ message: "Posts not found!" });
         }
 
-        return res.status(200).json(allMyPosts);
+
+
+        const allPosts: GetPostsWithComments[] = [];
+        for (const post of allMyPosts) {
+
+            const postWithComments: GetPostsWithComments = {
+                ...post,
+                comments: []
+            }
+
+            const comments = await getAllComments(post._id);
+
+            postWithComments.comments = comments ? comments : [];
+            allPosts.push(postWithComments);
+        }
+
+        console.log(allPosts);
+        return res.status(200).json(allPosts);
     }
     catch (e) {
         console.log("Error getting all posts!", e);
@@ -55,7 +84,15 @@ export const myPersonalPost = async (req: Request, res: Response) => {
 
         const personalPost = new UserPersonalPost(newPersonalPost);
         await personalPost.save();
-        res.status(201).send(personalPost);
+
+        const comments = await getAllComments(personalPost._id);
+
+        const data = {
+            personalPost,
+            comments
+        }
+
+        res.status(201).send(data);
     } catch (e) {
         console.log("Error while creating personal post", e);
         res.status(500).send({ message: 'Something went wrong!' });
@@ -90,8 +127,14 @@ export const updateMyPersonalPost = async (req: Request, res: Response) => {
         updatedPost.images = [...imageUrls, ...(toBeUpdatedPersonalPostData.images || [])];
 
         await updatedPost.save();
+        const comments = await getAllComments(postId);
 
-        return res.status(201).json(updatedPost);
+        const data = {
+            updatedPost,
+            comments
+        }
+
+        return res.status(201).json(data);
 
 
     } catch (e) {

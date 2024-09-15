@@ -3,9 +3,11 @@ import { Request, Response } from 'express';
 import { constructSearchQueryForFriends, FriendsQueryParamsType } from '../helpers/searchQueryConstructors';
 import User, { UserType } from '../models/user.model';
 import UsersAvatarSigned from '../models/user-avatars.model';
-import { FriendsSearchResponse, UserPersonalPostType } from '../helpers/types';
+import { UserPersonalPostType } from '../helpers/types';
 import mongoose from 'mongoose';
 import UserPersonalPost from '../models/user-personal-post.model';
+import { getAllComments } from './comments.controller';
+import { IComment } from '../models/comments.model';
 
 type SafeUser = Omit<UserType, 'password'>;
 
@@ -22,6 +24,9 @@ interface FeedPosts {
   }
 }
 
+export interface UserWithAvatarPostComments extends UserPostsData {
+  comments: IComment[]
+}
 
 export const getFeedPosts = async (req: Request, res: Response) => {
   try {
@@ -65,8 +70,23 @@ export const getFeedPosts = async (req: Request, res: Response) => {
       }
     });
 
+
+    const allPostsWithComments: UserWithAvatarPostComments[] = [];
+    for (const postData of postsWithAvatars) {
+      let post = postData.post;
+      const data: UserWithAvatarPostComments = {
+        ...postData,
+        comments: []
+      }
+      const commentsForPost = await getAllComments(post._id);
+      data.comments = commentsForPost ? commentsForPost : [];
+
+      allPostsWithComments.push(data);
+    }
+
+
     const response: FeedPosts = {
-      data: postsWithAvatars,
+      data: allPostsWithComments,
       pagination: {
         total
 

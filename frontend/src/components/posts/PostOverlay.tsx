@@ -5,6 +5,8 @@ import { FaHeart, FaComment } from "react-icons/fa";
 type PostOverlayPropsTypes = {
   isDropped: boolean;
   user_avatar: string;
+  isOpenComments: boolean;
+  openCommentsHandler: () => void;
   username: string;
   dropDownHandler: () => void;
   post_title: string;
@@ -16,11 +18,19 @@ type PostOverlayPropsTypes = {
 const PostOverlay: React.FC<PostOverlayPropsTypes> = ({
   isDropped,
   username,
+  isOpenComments,
+  openCommentsHandler,
   user_avatar,
   dropDownHandler,
   post_title
 }) => {
   const [isLiked, setIsLiked] = useState(false);
+
+  const openPostCommentsHandler = () => {
+    !isDropped && dropDownHandler();
+    openCommentsHandler();
+    isOpenComments && dropDownHandler();
+  }
 
   return (
     <>
@@ -51,6 +61,7 @@ const PostOverlay: React.FC<PostOverlayPropsTypes> = ({
             className="text-2xl text-white"
             role="button"
             aria-label="Toggle comments"
+            onClick={openPostCommentsHandler}
           />
           <p className={`text-sm font-semibold text-tomato`}>10</p>
         </div>
@@ -62,7 +73,7 @@ const PostOverlay: React.FC<PostOverlayPropsTypes> = ({
         className="absolute bottom-1 left-4 w-2/4 cursor-pointer"
         onClick={dropDownHandler}
       >
-        <p className={`text-white text-sm ${isDropped && "text-orange-700"}`}>
+        <p className={`text-white text-sm ${isDropped && "text-orange-700"}`} >
           See {!isDropped ? "more..." : "less"}
         </p>
       </div>

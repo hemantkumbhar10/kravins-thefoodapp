@@ -8,7 +8,6 @@ const AllMyPosts = () => {
 
     const { data: myPosts } = useQuery('allMyPosts', personalPostsApis.getAllMyPost);
 
-    console.log(myPosts);
     const { email, firstname, lastname, username, _id, friends, user_avatar } = useAppSelector(state => state.userprofile);
 
 

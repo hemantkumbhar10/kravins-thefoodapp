@@ -12,7 +12,7 @@ import myPostRoutes from './routes/my-personal-posts.routes';
 import updateAvatarRoutes from './routes/user-avatar.routes';
 import searchRoutes from './routes/search.routes';
 import friendsRoutes from './routes/friends.routes';
-
+import commentRoutes from './routes/comments.routes';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -63,6 +63,9 @@ app.use('/api/search', searchRoutes);
 
 //FRIENDS ROUTES
 app.use('/api/friends', friendsRoutes);
+
+//COMMENT ROUTES
+app.use('/api/comments', commentRoutes);
 
 app.listen(port, () => {
   console.log("Server started successfully on port: ", port);

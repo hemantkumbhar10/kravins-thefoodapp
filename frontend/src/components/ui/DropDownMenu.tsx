@@ -4,13 +4,13 @@ import { IoEllipsisHorizontal } from "react-icons/io5";
 
 
 interface Dropdown {
-  options: [{ value: string, label: string }],
-  button?: React.ReactNode,
+  options?: [{ value: string, label: string }],
+  buttons?: React.ReactNode[],
 }
 
 
 
-const DropDownMenu = ({ options, button }: Dropdown) => {
+const DropDownMenu = ({ options, buttons }: Dropdown) => {
 
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
@@ -44,13 +44,19 @@ const DropDownMenu = ({ options, button }: Dropdown) => {
         <IoEllipsisHorizontal onClick={dropDownHandler} className='cursor-pointer' aria-label='Options' />
         {isDropDownOpen &&
 
-          <ul className='absolute top-5 right-0 bg-white rounded-md'>
-            {options.map((option, index) => {
+          <ul className='absolute top-5 right-0 bg-white rounded-md z-50'>
+            {options?.map((option, index) => {
               return (
                 <li key={option.label + index} className='w-full border-b border-b-gray-300 p-1 px-2 pr-8'><Link to={`/${option.value}`} className='text-black text-sm' aria-label={option.label}>{option.label}</Link></li>
               )
             })}
-            {button && button}
+            {
+              buttons?.map((button, index) => {
+                return <React.Fragment key={index}>
+                  {button}
+                </React.Fragment>
+              })
+            }
           </ul>
         }
       </div>
