@@ -79,7 +79,7 @@ export interface UserPostsData {
     user: UserProfileResponseType['user'],
     avatarUrl: string,
     post: UserPersonalBEPostType,
-    comments: IUserCommentsResponse[]
+    comments?: IUserCommentsResponse[]
 }
 
 export interface FeedPosts {
