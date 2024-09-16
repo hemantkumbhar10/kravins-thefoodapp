@@ -10,6 +10,7 @@ type PostOverlayPropsTypes = {
   username: string;
   dropDownHandler: () => void;
   post_title: string;
+  commentCount?:number;
 };
 
 
@@ -22,7 +23,8 @@ const PostOverlay: React.FC<PostOverlayPropsTypes> = ({
   openCommentsHandler,
   user_avatar,
   dropDownHandler,
-  post_title
+  post_title,
+    commentCount
 }) => {
   const [isLiked, setIsLiked] = useState(false);
 
@@ -63,7 +65,7 @@ const PostOverlay: React.FC<PostOverlayPropsTypes> = ({
             aria-label="Toggle comments"
             onClick={openPostCommentsHandler}
           />
-          <p className={`text-sm font-semibold text-tomato`}>10</p>
+          <p className={`text-sm font-semibold text-tomato`}>{commentCount}</p>
         </div>
       </div>
       <h2 className="absolute bottom-8 left-3 p-1 text-2xl font-bold text-white uppercase italic text-left break-all">

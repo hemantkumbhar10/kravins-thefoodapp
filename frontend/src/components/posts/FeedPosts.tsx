@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, {useRef, useCallback } from 'react';
 import PostCard from './PostCard.tsx';
 import { useInfiniteQuery } from 'react-query';
 import * as feedPostClientApi from '../../apis/feed.api.ts';
@@ -24,8 +24,6 @@ const FeedPosts: React.FC = () => {
     });
 
 
-
-
   //GET Last posts elements reference and apply observer on it
   const lastPostCardRef = useCallback((node: HTMLDivElement) => {
 
@@ -48,7 +46,7 @@ const FeedPosts: React.FC = () => {
   if (error) return <h1>Error on fetching posts.....</h1>;
 
   return (
-    <div className='w-full sm:w-4/6 xl:w-2/5 h-full overflow-hidden'>
+    <div className='w-full sm:w-4/6 xl:w-2/5 h-full overflow-hidden overflow-x-hidden'>
 
       {postData?.pages.map((group, i) => (
         <React.Fragment key={i} >

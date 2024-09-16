@@ -4,8 +4,12 @@ import { UserPersonalPostType } from '../CreatePost';
 
 const PostDetailsInputs = () => {
 
-    const { register, formState: { errors } } = useFormContext<UserPersonalPostType>();
+    const { register, formState: { errors },watch } = useFormContext<UserPersonalPostType>();
 
+    console.log("Form values in PostDetailsInputs:", {
+        title: watch('title'),
+        recipe: watch('recipe')
+    });
     return (
         <>
             <div className="flex flex-col justify-start items-start mb-3">

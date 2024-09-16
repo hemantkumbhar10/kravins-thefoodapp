@@ -1,13 +1,11 @@
 import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form';
 import PostDetailsInputs from '../ui/PostDetailsInputs'
-import { UserPersonalBEPostType } from '../../types/BackendTypes';
+import { IUserCommentsResponse, UserPersonalBEPostType } from '../../types/BackendTypes';
 import { UserPersonalPostType } from '../CreatePost';
 
-
-
 type props = {
-    myPost?: UserPersonalBEPostType;
+    myPost?:  {comments:IUserCommentsResponse, post:UserPersonalBEPostType};
     postFormHandler: (postFormData: FormData) => void;
     isLoading: boolean
 }
@@ -15,23 +13,17 @@ type props = {
 const PostForm = ({ myPost, postFormHandler, isLoading }: props) => {
 
     const formMethods = useForm<UserPersonalPostType>();
-
     const { handleSubmit, reset } = formMethods;
 
-
-
     useEffect(() => {
-        reset(myPost);
+        reset(myPost?.post);
     }, [myPost, reset]);
-
-
-
 
     const postSubmitHandler = handleSubmit((formDataJson: UserPersonalPostType) => {
         const formData = new FormData();
 
         if (myPost) {
-            formData.append("postId", myPost._id);
+            formData.append("postId", myPost?.post._id);
         }
         formData.append("title", formDataJson.title);
         formData.append("recipe", formDataJson.recipe);

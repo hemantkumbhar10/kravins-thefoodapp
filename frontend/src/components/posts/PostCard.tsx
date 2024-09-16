@@ -4,94 +4,46 @@ import { UserPostsData } from '../../types/BackendTypes';
 import DropDownMenu from "../ui/DropDownMenu";
 import { useAppSelector } from "../../store/dispatchHooks";
 import { dateFormatter } from '../../utils/dates';
-import { useMutation, useQueryClient } from "react-query";
-import * as myPersonalPostApis from '../../apis/myposts.api';
 import Modal from '../ui/Modal';
 import { useAppContext } from '../../contexts/useAppContext';
 import { useNavigate } from 'react-router-dom';
 import Comments from '../comments/Comments';
 import CommentInput from '../comments/CommentInput'
-import { createNewComment } from '../../apis/comments.api';
+import { useCreateCommentMutation } from "../../hooks/mutations/comments/useCreateCommentMutation";
+import { useDeletePostMutation } from "../../hooks/mutations/posts/useDeletePostMutation";
 
 type PostDataType = {
     post: UserPostsData
 }
-
-
-
 const PostCard = React.forwardRef<HTMLDivElement, PostDataType>((props, ref) => {
+    const { avatarUrl, user, post, comments } = props.post;
+
     const [isDropped, setIsDropped] = useState(false);
     const [isOpenComments, setIsOpenComments] = useState(false);
     const [inputText, setInputText] = useState("");
-    const { username } = useAppSelector(state => state.userprofile);
-    const { avatarUrl, user, post, comments } = props.post;
 
-    const { showToast, isLoggedIn } = useAppContext();
     const navigate = useNavigate();
-    const { statusString } = dateFormatter(post.lastUpdated);
-
-
-    const openCommentsHandler = () => {
-        setIsOpenComments(!isOpenComments);
-    }
-
-
-    const dropDownHandler = () => {
-        setIsDropped(!isDropped);
-        setIsOpenComments(false);
-    };
-
-
-
-    const modalCloseHandler = () => {
-        dialog.current?.close();
-    }
-
-
-
-    const queryClient = useQueryClient();
-    const { mutate: deletePostMutate } = useMutation(myPersonalPostApis.deleteMyPost, {
-        onSuccess: async () => {
-            showToast({ message: 'Post Deleted!', type: 'SUCCESS' });
-            modalCloseHandler();
-            await queryClient.invalidateQueries('feedPosts');
-            navigate('/');
-        },
-        onError: async () => {
-            showToast({ message: 'Something went wrong!', type: 'ERROR' });
-        },
-    })
+    const dialog = useRef<HTMLDialogElement>(null);
+    const { username } = useAppSelector(state => state.userprofile);
+    const { isLoggedIn } = useAppContext();
 
     useEffect(() => {
     }, [comments])
-
-
-
-
-    const dialog = useRef<HTMLDialogElement>(null);
 
     const modalOpenHandler = () => {
         dialog.current?.showModal();
     }
 
-
-
-    const handleDeletePostForm = () => {
-        deletePostMutate(post._id);
-        modalCloseHandler();
+    const modalCloseHandler = () => {
+        dialog.current?.close();
     }
 
+    const setText = (text: string) => {
+        setInputText(text);
+    }
 
-
-    const { mutate: addCommentMutate } = useMutation(createNewComment, {
-        onSuccess: () => {
-            setInputText("");
-            queryClient.invalidateQueries("feedPosts")
-        },
-        onError: async () => {
-            showToast({ message: 'Something went wrong!', type: 'ERROR' });
-        },
-    })
+    const { mutate: deletePostMutate } = useDeletePostMutation(modalCloseHandler, navigate);
+    const { mutate: addCommentMutate } = useCreateCommentMutation(setInputText);
 
     const commentSubmitHandler = () => {
         const data = {
@@ -101,15 +53,25 @@ const PostCard = React.forwardRef<HTMLDivElement, PostDataType>((props, ref) => 
         addCommentMutate(data);
     };
 
-    const setText = (text: string) => {
-        setInputText(text);
+
+    const openCommentsHandler = () => {
+        setIsOpenComments(!isOpenComments);
     }
 
+    const dropDownHandler = () => {
+        setIsDropped(!isDropped);
+        setIsOpenComments(false);
+    };
 
+    const handleDeletePostForm = () => {
+        deletePostMutate(post._id);
+        modalCloseHandler();
+
+    }
+
+    const { statusString } = dateFormatter(post.lastUpdated);
 
     const DeletePostButton = <button type="button" className="text-red-700 text-sm p-1 px-2" aria-label="Delete Post" onClick={modalOpenHandler}>Delete</button>
-
-
 
     return (
         <>
@@ -123,14 +85,15 @@ const PostCard = React.forwardRef<HTMLDivElement, PostDataType>((props, ref) => 
                     isDropped={isDropped}
                     avatarUrl={avatarUrl}
                     post_title={post.title}
+                    commentCount={comments.length}
                 />
                 <div
-                    className={`w-full ${isDropped ? "h-96 p-3 pb-4 " : "h-0"} bg-gray-100 md:rounded-xl transition-[height, padding] duration-300 ease overflow-y-scroll`}
+                    className={`w-full ${isDropped ? "h-[30rem] p-3 pb-4 " : "h-0"} bg-gray-100 md:rounded-xl transition-[height, padding] duration-300 ease overflow-y-scroll`}
                 >
                     <div className="flex flex-row w-full justify-between">
                         <div className="mb-2">
                             <a className="italic text-base font-semibold select-none">@{user.username}</a>
-                            <p className="select-none text-xs">{statusString}</p>
+                            <p className="select-none text-xs">{statusString} </p>
                         </div>
                         {username === user.username &&
                             <DropDownMenu options={[{ value: `edit/${post._id}`, label: "Edit" },]} buttons={[DeletePostButton]} />}
@@ -140,11 +103,11 @@ const PostCard = React.forwardRef<HTMLDivElement, PostDataType>((props, ref) => 
                         {post.recipe}
                     </p> :
                         <>
-                            {isLoggedIn && <div className='flex w-full relative flex-col justify-start items-start gap-2'>
+                            {isLoggedIn && <div className='flex w-full relative flex-col justify-start items-start mb-3'>
                                 <CommentInput onChangeValue={setText} textValue={inputText} submitHandler={commentSubmitHandler} />
                             </div>}
-                            {comments[0] && <Comments comments={comments} rootCommentId={comments[0]._id} />}
-                       </>
+                            {comments[0] && <Comments comments={comments} />}
+                        </>
                     }
                 </div>
             </div>

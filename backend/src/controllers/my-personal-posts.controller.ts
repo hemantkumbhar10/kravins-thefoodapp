@@ -3,7 +3,7 @@ import UserPersonalPost from '../models/user-personal-post.model';
 import { uploadImages } from '../middlewares/cloudinary.middleware';
 import { UserPersonalPostType } from '../helpers/types';
 import { getAllComments } from './comments.controller';
-import { IComment } from '../models/comments.model';
+import Comments, { IComment } from '../models/comments.model';
 
 export const getMyPersonalPost = async (req: Request, res: Response) => {
     try {
@@ -160,6 +160,7 @@ export const deleteMyPost = async (req: Request, res: Response) => {
         if (req.userId !== post.userId) {
             return res.status(401).send({ message: "Unauthorized!" });
         }
+        await Comments.deleteMany({post : postId});
 
         await post.deleteOne();
 

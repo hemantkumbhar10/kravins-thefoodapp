@@ -12,6 +12,7 @@ interface GalleryProps {
   user: UserPostsData['user'];
   avatarUrl: string;
   post_title: string;
+  commentCount?:number;
 }
 
 const Gallery: React.FC<GalleryProps> = ({
@@ -22,7 +23,8 @@ const Gallery: React.FC<GalleryProps> = ({
   isDropped,
   user,
   avatarUrl,
-  post_title
+  post_title,
+    commentCount
 }) => {
 
   return (
@@ -38,6 +40,7 @@ const Gallery: React.FC<GalleryProps> = ({
         username={user.username}
         dropDownHandler={dropDownHandler}
         post_title={post_title}
+                commentCount={commentCount}
       />
     </div>
   );
