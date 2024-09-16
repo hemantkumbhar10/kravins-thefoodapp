@@ -9,8 +9,6 @@ export interface IComment extends Document {
     replies: [mongoose.Schema.Types.ObjectId];
 }
 
-
-
 const commentSchema = new mongoose.Schema<IComment>({
     post: {
         type: mongoose.Schema.Types.ObjectId,

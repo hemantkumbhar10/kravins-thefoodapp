@@ -5,18 +5,17 @@ import { IUserCommentsResponse } from '../../types/BackendTypes';
 
 type CommentPropsType = {
     comments: IUserCommentsResponse[];
-    rootCommentId?: string;
+    rootCommentId?: string | null;
 }
 
 
-const Comments = memo(({ comments, rootCommentId }: CommentPropsType) => {
-
+const Comments = memo(({ comments, rootCommentId = null}: CommentPropsType) => {
     return <>
         <div className={`flex w-full relative flex-col justify-start items-start`}>
             {
                 comments && comments.map((comment) => {
                     return <React.Fragment key={comment._id}>
-                        <CommentItem comment={comment} key={comment._id} rootCommentId={rootCommentId} />
+                        <CommentItem comment={comment} key={comment._id} rootCommentId={rootCommentId === null ? comment._id : rootCommentId} />
                     </React.Fragment>
                 })
             }

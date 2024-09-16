@@ -12,6 +12,12 @@ interface CreateReplyData {
     parentComment: string;
 }
 
+export interface DeleteCommentData{
+    commentId:string;
+    rootCommentId?:string;
+}
+
+
 export interface UpdateCommentData extends CreateCommentData {
     commentId: string;
     rootCommentId?: string;
@@ -28,7 +34,7 @@ export const createNewComment = async (myCommentData: CreateCommentData) => {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to create post!");
+        throw new Error("Failed to create comment!");
     }
 
     return response.json();
@@ -45,7 +51,7 @@ export const createReply = async (myReplyData: CreateReplyData) => {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to create post!");
+        throw new Error("Failed to create comment!");
     }
 
     return response.json();
@@ -61,7 +67,23 @@ export const updateComment = async (myCommentData: UpdateCommentData) => {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to create post!");
+        throw new Error("Failed to create comment!");
+    }
+
+    return response.json();
+};
+export const deleteComment = async (myCommentData: DeleteCommentData) => {
+    const response = await fetch(`${URL}/api/comments/delete`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(myCommentData),
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to delete comment!");
     }
 
     return response.json();

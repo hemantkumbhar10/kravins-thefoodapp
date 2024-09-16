@@ -1,5 +1,3 @@
-
-
 type CommentInputPropType = {
     onChangeValue: (text: string) => void,
     textValue: string,
@@ -15,7 +13,8 @@ const CommentInput = ({ onChangeValue, textValue, submitHandler, type, defaultVa
 
         <div className='w-full'>
             <label className="hidden" aria-label={type === 'UPDATE' ? 'Update Comment' : 'Enter comment'} htmlFor='commentbox'>{type === 'UPDATE' ? 'Update Comment' : 'Enter comment'}</label>
-            <textarea id='commentbox' rows={3}
+            <textarea id='commentbox' rows={2}
+                required
                 onChange={e => onChangeValue(e.target.value)}
                 value={textValue}
                 defaultValue={defaultValue}

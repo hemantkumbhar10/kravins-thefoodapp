@@ -10,7 +10,7 @@ type CommentTextPropType = {
 const CommentText = ({ text }: CommentTextPropType) => {
 
     return <>
-        <p className='w-full tracking-normal text-sm '>{text}</p>
+        <p className='w-full tracking-normal text-sm break-words hyphens-auto'>{text}</p>
     </>
 }
 

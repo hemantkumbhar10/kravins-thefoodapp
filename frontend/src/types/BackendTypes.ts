@@ -1,4 +1,3 @@
-
 export type FriendsResponseType = {
     friendsRequestUsernames: string[];
     friendsUsernames: string[];
@@ -88,6 +87,11 @@ export interface FeedPosts {
     pagination: {
         total: number
     }
+}
+
+export interface QueryFeedPostsCache {
+    pageParams:[];
+    pages:FeedPosts[];
 }
 
 
