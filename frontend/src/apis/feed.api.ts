@@ -11,7 +11,7 @@ export type SearchPostsParams = {
 
 
 
-export const getFeedPosts = async ({ pageParam }: { pageParam: any }): Promise<FeedPosts> => {
+export const getFeedPosts = async ({ pageParam }: { pageParam: string }): Promise<FeedPosts> => {
 
   const queryParams = new URLSearchParams();
 

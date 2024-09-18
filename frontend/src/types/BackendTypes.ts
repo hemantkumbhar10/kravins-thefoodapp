@@ -56,6 +56,7 @@ export type UserPersonalBEPostType = {
     recipe: string;
     images: string[];
     lastUpdated: Date;
+    comments: IUserCommentsResponse[];
 }
 
 
@@ -79,7 +80,7 @@ export interface UserPostsData {
     user: UserProfileResponseType['user'],
     avatarUrl: string,
     post: UserPersonalBEPostType,
-    comments?: IUserCommentsResponse[]
+    comments: IUserCommentsResponse[]
 }
 
 export interface FeedPosts {
@@ -90,8 +91,8 @@ export interface FeedPosts {
 }
 
 export interface QueryFeedPostsCache {
-    pageParams:[];
-    pages:FeedPosts[];
+    pageParams: [];
+    pages: FeedPosts[];
 }
 
 
