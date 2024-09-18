@@ -27,7 +27,8 @@ const AllMyPosts = () => {
                         const postData = {
                             avatarUrl: user_avatar,
                             user: userData,
-                            post
+                            post,
+                            comments: post.comments   //Just to obey TS rules smh..
                         }
                         return (
                             <PostCard key={post._id} post={postData} />
