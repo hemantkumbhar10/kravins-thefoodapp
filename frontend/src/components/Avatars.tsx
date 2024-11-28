@@ -18,7 +18,7 @@ type AvatarsProps =
 
 export const Avatars: React.FC<AvatarsProps> = ({ modalCloseHandler, avatars }) => {
     const [selectedAvatar, setSelectedAvatar] = useState('');
-    const userAvatar = useAppSelector(state => state.userprofile.user_avatar);
+    const userAvatar = useAppSelector(state => state.userprofile.user.avatar.url);
     const { showToast } = useAppContext();
     const dispatch = useAppDispatch();
 

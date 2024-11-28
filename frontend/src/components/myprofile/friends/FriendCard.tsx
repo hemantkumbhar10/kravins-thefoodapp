@@ -50,7 +50,7 @@ const FriendCard: React.FC<FriendCardPropType> = ({ avatar, firstname, lastname,
         deleteFriendMutation.mutate(friendsUsername);
     }
 
-    const { friends } = useAppSelector(state => state.userprofile);
+    const { friends } = useAppSelector(state => state.userprofile.user);
 
 
 

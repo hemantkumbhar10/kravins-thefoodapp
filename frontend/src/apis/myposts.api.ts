@@ -1,4 +1,4 @@
-import { IUserPostsWithComments, UserPersonalBEPostType } from "../types/BackendTypes";
+import { IUserPostsWithComments} from "../types/BackendTypes";
 
 const URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 

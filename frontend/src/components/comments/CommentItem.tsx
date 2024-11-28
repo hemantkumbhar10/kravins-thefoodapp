@@ -78,7 +78,7 @@ const CommentItem = ({ comment, rootCommentId }: CommentItemPropType) => {
                     <Link to="/" className="z-10">
                         <img
                             className="w-8 h-8 rounded-full object-contain"
-                            src={singleComment.authorAvatar}
+                            src={singleComment.author.avatar.url}
                             alt={singleComment.author.username + " avatar"}
                             role="button"
                             aria-label={singleComment.author.username + " avatar"}

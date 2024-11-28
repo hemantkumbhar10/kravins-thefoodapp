@@ -20,7 +20,7 @@ const CommentActions = ({ openCommentInputBoxHandler, comment, updateCommentHand
     const editButtonDialog = useRef<HTMLDialogElement>(null);
     const deleteButtonDialog = useRef<HTMLDialogElement>(null);
     const { isLoggedIn } = useAppContext();
-    const {username} = useAppSelector(state => state.userprofile);
+    const {username} = useAppSelector(state => state.userprofile.user);
 
     const editButtonModalOpenHandler = () => {
         editButtonDialog.current?.showModal();
