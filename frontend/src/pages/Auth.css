@@ -1,0 +1,19 @@
+.auth_main {
+  background: linear-gradient(rgba(248, 106, 106, 0.208), rgba(164, 161, 161, 0.323)),
+    url("../assets/images/doodlebg.png");
+  @apply h-screen font-sans bg-contain flex;
+}
+
+.auth_container {
+  @apply m-auto w-full h-screen md:h-auto md:w-1/2 lg:w-1/3 xl:w-1/4 
+    flex flex-col justify-center items-center bg-gray-200
+    md:bg-white md:p-4 md:rounded-xl;
+}
+
+.auth_nav {
+  @apply w-full flex flex-col justify-end md:justify-center items-center mb-5 h-[40%] md:h-auto bg-white rounded-b-3xl rounded-bl-3xl;
+}
+
+.auth_nav_title {
+  @apply w-1/2 font-bold pb-2 text-center text-base text-gray-900 cursor-pointer transition-all duration-300;
+}
